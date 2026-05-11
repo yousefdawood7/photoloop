@@ -5,7 +5,7 @@ import { Pool } from 'pg';
 import { env } from '../common/utils/env';
 import { KEYS } from '../common/utils/key';
 import { ConfigService } from './config.service';
-
+@Global()
 @Module({
   providers: [
     ConfigService,
@@ -19,6 +19,6 @@ import { ConfigService } from './config.service';
       },
     },
   ],
+  exports: [KEYS.DATABASE_CONNECTION, ConfigService],
 })
-@Global()
 export class ConfigModule {}
