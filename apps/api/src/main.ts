@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 
+import './common/env'; // to validate env schema on build
 import { AppModule } from './app.module';
 
 async function bootstrap() {
