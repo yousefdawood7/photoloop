@@ -1,6 +1,7 @@
 import { defineConfig } from 'drizzle-kit';
 
 import 'dotenv/config';
+import { env } from './src/common/utils/env';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
 export default defineConfig({
@@ -8,6 +9,6 @@ export default defineConfig({
   schema: './src/common/db/schemas/auth-schema.ts',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.DATABASE_URL!,
+    url: env.DATABASE_URL,
   },
 });
