@@ -17,6 +17,7 @@ import { ConfigModule } from './config/config.module';
         auth: betterAuth({
           database: drizzleAdapter(drizzle, {
             provider: 'pg',
+            usePlural: true,
           }),
         }),
       }),
