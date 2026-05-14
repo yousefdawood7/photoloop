@@ -18,6 +18,13 @@ export const nextJsConfig = [
   js.configs.recommended,
   eslintConfigPrettier,
   ...tseslint.configs.recommended,
+
+  {
+    settings: {
+      react: { version: "19" }, // Avoids auto-detection crash
+    },
+  },
+
   globalIgnores([
     // Default ignores of eslint-config-next:
     ".next/**",
