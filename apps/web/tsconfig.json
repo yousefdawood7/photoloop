@@ -9,6 +9,7 @@
 
     "paths": {
       "@/*": ["./src/*"],
+      "public/*": ["./public/*"],
       "@repo/ui/*": ["../../packages/ui/src/*"]
     },
 
