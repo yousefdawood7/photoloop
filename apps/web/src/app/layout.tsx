@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@repo/ui/components/themes/theme-provider";
 
@@ -18,6 +18,12 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
 });
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: "variable",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,10 +32,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable}`}
+        className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} ${inter.variable}`}
       >
         <ThemeProvider>
-          <main>{children}</main>
+          <main className="">{children}</main>
         </ThemeProvider>
       </body>
     </html>
