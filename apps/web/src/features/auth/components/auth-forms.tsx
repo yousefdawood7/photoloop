@@ -1,3 +1,4 @@
+import FormFields from "@/features/auth/components/auth-fields/form-fields";
 import AuthHeader from "@/features/auth/components/auth-header";
 import AuthMethods from "@/features/auth/components/auth-methods/auth-methods";
 import AuthSeparator from "@/features/auth/components/auth-separator";
@@ -16,6 +17,7 @@ export default function AuthForms() {
         </div>
         <AuthMethods />
         <AuthSeparator />
+        <FormFields />
       </aside>
     </div>
   );
