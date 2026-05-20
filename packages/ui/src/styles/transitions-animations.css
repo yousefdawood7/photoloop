@@ -1,0 +1,29 @@
+::view-transition-old(.auth-exit) {
+  animation: authOut 180ms ease;
+}
+
+::view-transition-new(.auth-enter) {
+  animation: authIn 260ms ease;
+}
+
+@keyframes authOut {
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+    filter: blur(4px);
+  }
+}
+
+@keyframes authIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(1.02);
+    filter: blur(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
