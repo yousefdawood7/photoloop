@@ -2,6 +2,7 @@ import FormFields from "@/features/auth/components/auth-fields/form-fields";
 import AuthHeader from "@/features/auth/components/auth-header";
 import AuthMethods from "@/features/auth/components/auth-methods/auth-methods";
 import AuthSeparator from "@/features/auth/components/auth-separator";
+import Link from "next/link";
 
 export default function AuthForms() {
   return (
@@ -19,6 +20,19 @@ export default function AuthForms() {
         <AuthSeparator />
         <FormFields />
       </aside>
+
+      <footer>
+        <p>
+          <span className="text-muted-foreground">Powered By</span>{" "}
+          <Link
+            href="https://yousefdawood.me"
+            target="_blank"
+            className="underline underline-offset-4 hover:text-primary/90 transition-colors"
+          >
+            Yousef Dawood
+          </Link>
+        </p>
+      </footer>
     </div>
   );
 }
