@@ -8,7 +8,7 @@ export default function Page() {
       <div className="flex flex-1 bg-secondary rounded-md border overflow-hidden">
         <AuthBackground />
         <Separator orientation="vertical" />
-        <AuthForms isRegister />
+        <AuthForms />
       </div>
     </section>
   );

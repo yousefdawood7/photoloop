@@ -4,21 +4,31 @@ import AuthMethods from "@/features/auth/components/auth-methods/auth-methods";
 import AuthSeparator from "@/features/auth/components/auth-separator";
 import Link from "next/link";
 
-export default function AuthForms() {
+type AuthFormsProps = {
+  isRegister?: boolean;
+};
+
+export default function AuthForms({ isRegister = false }: AuthFormsProps) {
   return (
     <div className="flex flex-col items-center w-full py-10 px-4">
       <AuthHeader />
 
-      <aside className="my-auto flex flex-col gap-5 relative">
-        <div className=" space-y-2.5">
-          <h2 className="text-3xl">Welcome back</h2>
+      <aside className="my-auto flex flex-col gap-5 relative w-full max-w-[500px]">
+        <div className=" space-y-2.5 w-full">
+          {isRegister ? (
+            <h2 className="text-3xl">Create an account</h2>
+          ) : (
+            <h2 className="text-3xl">Welcome back</h2>
+          )}
           <p className="text-muted-foreground">
-            Sign in to your account to continue your journey with Photoloop
+            {isRegister
+              ? "Sign up to create your account"
+              : "Sign in to your account to continue your journey with Photoloop"}
           </p>
         </div>
         <AuthMethods />
         <AuthSeparator />
-        <FormFields />
+        <FormFields isRegister={isRegister} />
       </aside>
 
       <footer>
