@@ -21,7 +21,6 @@ import { ConfigModule } from './config/config.module';
             usePlural: true,
             schema,
           }),
-
           emailAndPassword: {
             enabled: true,
             requireEmailVerification: true,
