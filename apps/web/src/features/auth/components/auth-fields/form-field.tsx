@@ -8,12 +8,14 @@ import { useId, useState } from "react";
 type FormFieldProps = {
   label: string;
   type?: string;
+  name?: string;
   placeholder?: string;
 };
 
 export default function FormField({
   type = "text",
   label,
+  name,
   placeholder,
 }: FormFieldProps) {
   const id = useId();
@@ -28,7 +30,7 @@ export default function FormField({
       <div className="relative">
         <Input
           id={id}
-          name={id}
+          name={name || label.toLowerCase()}
           type={
             type === "password" ? (isPasswordShown ? "text" : "password") : type
           }
