@@ -17,6 +17,7 @@
     "incremental": true,
     "skipLibCheck": true,
     "strict": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "jsx": "react" // to compile JSX files to js files
   }
 }
