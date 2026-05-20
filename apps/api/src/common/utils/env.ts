@@ -8,6 +8,7 @@ export const env = createEnv({
     APP_STAGE: z.enum(['dev', 'prod']),
     BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string().min(32).max(128),
+    RESEND_API_KEY: z.string().min(32).max(128),
   },
 
   runtimeEnv: process.env,

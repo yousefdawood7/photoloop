@@ -3,12 +3,14 @@ import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
+import { ResendModule } from 'nestjs-resend';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { schema } from './common/db/schemas';
 import { KEYS } from './common/utils/key';
 import { ConfigModule } from './config/config.module';
+import { ConfigService } from './config/config.service';
 
 @Module({
   imports: [
@@ -30,6 +32,13 @@ import { ConfigModule } from './config/config.module';
         }),
       }),
       inject: [KEYS.DATABASE_CONNECTION],
+    }),
+
+    ResendModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        apiKey: configService.env().RESEND_API_KEY,
+      }),
+      inject: [ConfigService],
     }),
   ],
   controllers: [AppController],
