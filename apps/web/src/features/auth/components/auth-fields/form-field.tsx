@@ -1,10 +1,9 @@
 "use client";
 
-import { Button } from "@repo/ui/components/button";
+import TogglePassword from "@/features/auth/components/auth-fields/toggle-password";
 import { Field, FieldLabel } from "@repo/ui/components/field";
 import { Input } from "@repo/ui/components/input";
 import { useId, useState } from "react";
-import { LucideEye, LucideEyeOff } from "@repo/ui/components/icons";
 
 type FormFieldProps = {
   label: string;
@@ -36,15 +35,10 @@ export default function FormField({
           placeholder={placeholder || ""}
         />
         {type === "password" && (
-          <Button
-            size={"icon-xs"}
-            variant={"ghost"}
-            className="absolute top-0 right-0 h-full active:translate-none!"
-            type="button"
-            onClick={handlePasswordToggle}
-          >
-            {isPasswordShown ? <LucideEyeOff /> : <LucideEye />}
-          </Button>
+          <TogglePassword
+            isPasswordShown={isPasswordShown}
+            handlePasswordToggle={handlePasswordToggle}
+          />
         )}
       </div>
     </Field>
