@@ -6,6 +6,7 @@ import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { schema } from './common/db/schemas';
 import { KEYS } from './common/utils/key';
 import { ConfigModule } from './config/config.module';
 
@@ -18,7 +19,9 @@ import { ConfigModule } from './config/config.module';
           database: drizzleAdapter(drizzle, {
             provider: 'pg',
             usePlural: true,
+            schema,
           }),
+
           emailAndPassword: {
             enabled: true,
             requireEmailVerification: true,
