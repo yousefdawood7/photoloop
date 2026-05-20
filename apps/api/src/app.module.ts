@@ -19,6 +19,12 @@ import { ConfigModule } from './config/config.module';
             provider: 'pg',
             usePlural: true,
           }),
+          emailAndPassword: {
+            enabled: true,
+            requireEmailVerification: true,
+            minPasswordLength: 8,
+            maxPasswordLength: 128,
+          },
         }),
       }),
       inject: [KEYS.DATABASE_CONNECTION],
