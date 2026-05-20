@@ -1,12 +1,23 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
+import { AllowAnonymous, AuthService } from '@thallesp/nestjs-better-auth';
 
 import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  constructor(
+    private readonly appService: AppService,
+    private readonly authService: AuthService,
+  ) {}
+
+  @Post()
+  @AllowAnonymous() // Allow anonymous access
+  async sendEmail() {
+    const x = await this.authService.api.sendVerificationEmail({
+      body: { email: 'yousefdawood31@gmail.com' },
+    });
+
+    console.log(x);
+    return { message: 'Verification email sent' };
   }
 }
