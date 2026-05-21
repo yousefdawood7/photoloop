@@ -18,13 +18,24 @@ import { ConfigService } from './config/config.service';
   imports: [
     ConfigModule,
     AuthModule.forRootAsync({
-      useFactory: (drizzle: NodePgDatabase, resendService: ResendService) => ({
+      useFactory: (
+        drizzle: NodePgDatabase,
+        resendService: ResendService,
+        configService: ConfigService,
+      ) => ({
         auth: betterAuth({
           database: drizzleAdapter(drizzle, {
             provider: 'pg',
             usePlural: true,
             schema,
           }),
+          socialProviders: {
+            facebook: {
+              clientId: configService.env().FACEBOOK_CLIENT_ID,
+              clientSecret: configService.env().FACEBOOK_CLIENT_SECRET,
+            },
+          },
+
           emailAndPassword: {
             enabled: true,
             requireEmailVerification: true,
@@ -39,7 +50,6 @@ import { ConfigService } from './config/config.service';
                 subject: 'Verify your email for Photoloop',
 
                 html: await render(
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                   VerifyEmailTemplate({ name: 'Yousef Dawood', otp: '123456' }),
                 ),
 
@@ -58,7 +68,7 @@ import { ConfigService } from './config/config.service';
           },
         }),
       }),
-      inject: [KEYS.DATABASE_CONNECTION, ResendService],
+      inject: [KEYS.DATABASE_CONNECTION, ResendService, ConfigService],
     }),
 
     ResendModule.forRootAsync({
