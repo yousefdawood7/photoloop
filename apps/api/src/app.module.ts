@@ -52,19 +52,12 @@ import { ConfigService } from './config/config.service';
                 html: await render(
                   VerifyEmailTemplate({ name: 'Yousef Dawood', otp: '123456' }),
                 ),
-
-                // attachments: [
-                //   {
-                //     path: 'https://i.ibb.co/67wqpNFY/logomark-1.png',
-                //     filename: 'logo.png',
-                //     inlineContentId: 'logo-image',
-                //   },
-                // ],
               });
             },
             sendOnSignUp: true,
             sendOnSignIn: true,
             autoSignInAfterVerification: true,
+            trustedOrigins: ['http://localhost:3000'],
           },
         }),
       }),

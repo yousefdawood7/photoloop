@@ -13,6 +13,8 @@
       "@repo/ui/*": ["../../packages/ui/src/*"]
     },
 
+    "declaration": false,
+    "declarationMap": false,
     "strictNullChecks": true
   },
   "include": [
