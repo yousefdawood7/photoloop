@@ -12,11 +12,11 @@ export const registerSchema = z
       .pipe(z.email({ error: "Invalid email format" })),
 
     password: z.coerce
-      .string({ error: "Password is required" })
+      .string<string>({ error: "Password is required" })
       .min(8, { error: "Password must be at least 8 characters long" }),
 
     confirmPassword: z.coerce
-      .string({ error: "Please confirm your password" })
+      .string<string>({ error: "Please confirm your password" })
       .min(1, { error: "Please confirm your password" }),
   })
   .refine((val) => val.password === val.confirmPassword, {

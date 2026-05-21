@@ -1,14 +1,28 @@
+import { registerSchema } from "@/app/lib/schemas";
 import FormField from "@/features/auth/components/auth-fields/form-field";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@repo/ui/components/button";
 import { Field, FieldGroup } from "@repo/ui/components/ui/field";
 import Form from "next/dist/client/app-dir/form";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 type FormFieldsProps = {
   isRegister?: boolean;
 };
 
 export default function FormFields({ isRegister = false }: FormFieldsProps) {
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
   const confirmPasswordFields = (
     <div className="flex justify-between items-center gap-10">
       <FormField
