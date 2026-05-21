@@ -25,7 +25,7 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
   });
 
   const confirmPasswordFields = (
-    <div className="flex justify-between items-center gap-10">
+    <div className="flex justify-between items-center gap-5">
       <FormField
         name="password"
         label="Password"
@@ -48,7 +48,7 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FieldGroup>
+        <FieldGroup className="gap-5">
           <FormField
             name="name"
             label="Full Name"

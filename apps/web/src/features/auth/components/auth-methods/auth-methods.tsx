@@ -13,6 +13,7 @@ export default function AuthMethods() {
         title="Sign in with Facebook"
         authLogo={<Facebook />}
         className="col-span-2"
+        signInMethod="facebook"
       />
       <AuthButton
         title="Sign in with Magic Link"
