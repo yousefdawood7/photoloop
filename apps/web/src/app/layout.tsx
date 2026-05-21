@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@repo/ui/components/themes/theme-provider";
+import { Toaster } from "@repo/ui/components/sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -36,6 +37,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <main className="">{children}</main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
