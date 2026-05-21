@@ -3,6 +3,7 @@
 import TogglePassword from "@/features/auth/components/auth-fields/toggle-password";
 import { Field, FieldError, FieldLabel } from "@repo/ui/components/field";
 import { Input } from "@repo/ui/components/input";
+import { cn } from "@repo/ui/lib/utils";
 import { useId, useState, ViewTransition } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
@@ -55,9 +56,16 @@ export default function FormField({
               />
             )}
           </div>
-          {fieldState.invalid && (
-            <FieldError className="text-xs" errors={[fieldState.error]} />
-          )}
+          <div
+            className={cn(
+              "min-h-5 transition-opacity",
+              fieldState.invalid ? "opacity-100" : "opacity-0",
+            )}
+          >
+            {fieldState.invalid && (
+              <FieldError className="text-xs" errors={[fieldState.error]} />
+            )}
+          </div>
         </Field>
       )}
     />
