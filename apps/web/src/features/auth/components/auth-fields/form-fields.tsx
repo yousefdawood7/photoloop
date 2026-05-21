@@ -1,6 +1,6 @@
 "use client";
 
-import { registerSchema } from "@/app/lib/schemas";
+import { loginSchema, registerSchema } from "@/app/lib/schemas";
 import FormField from "@/features/auth/components/auth-fields/form-field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@repo/ui/components/button";
@@ -15,7 +15,7 @@ type FormFieldsProps = {
 
 export default function FormFields({ isRegister = false }: FormFieldsProps) {
   const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(isRegister ? registerSchema : loginSchema),
     defaultValues: {
       name: "",
       email: "",

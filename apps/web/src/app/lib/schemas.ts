@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const registerSchema = z
+const authSchema = z
   .object({
     name: z
       .string({ error: "Name is required" })
@@ -23,3 +23,12 @@ export const registerSchema = z
     error: "Password don't match",
     path: ["confirmPassword"],
   });
+
+export const loginSchema = authSchema;
+export const registerSchema = authSchema.refine(
+  (val) => val.password === val.confirmPassword,
+  {
+    error: "Password don't match",
+    path: ["confirmPassword"],
+  },
+);

@@ -3,7 +3,7 @@
 import TogglePassword from "@/features/auth/components/auth-fields/toggle-password";
 import { Field, FieldError, FieldLabel } from "@repo/ui/components/field";
 import { Input } from "@repo/ui/components/input";
-import { useId, useState } from "react";
+import { useId, useState, ViewTransition } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 type FormFieldProps = {
