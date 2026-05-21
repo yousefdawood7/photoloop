@@ -14,7 +14,7 @@ export default function AuthForms({ isRegister = false }: AuthFormsProps) {
     <div className="flex flex-col items-center w-full py-10 px-4">
       <AuthHeader />
 
-      <aside className="my-auto flex flex-col gap-5 relative w-full max-w-[500px]">
+      <aside className="my-auto flex flex-col gap-5 relative w-full max-w-[600px]">
         <div className=" space-y-2.5 w-full">
           <ViewTransition name="auth-title">
             {isRegister ? (

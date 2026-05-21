@@ -1,11 +1,12 @@
+"use client";
+
 import { registerSchema } from "@/app/lib/schemas";
 import FormField from "@/features/auth/components/auth-fields/form-field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@repo/ui/components/button";
 import { Field, FieldGroup } from "@repo/ui/components/ui/field";
-import Form from "next/dist/client/app-dir/form";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 
 type FormFieldsProps = {
@@ -26,11 +27,13 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
   const confirmPasswordFields = (
     <div className="flex justify-between items-center gap-10">
       <FormField
+        name="password"
         label="Password"
         type="password"
         placeholder="Enter your password"
       />
       <FormField
+        name="confirmPassword"
         label="Confirm Password"
         type="password"
         placeholder="Confirm your password"
@@ -38,49 +41,62 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
     </div>
   );
 
+  function onSubmit(data: z.infer<typeof registerSchema>) {
+    console.log(data);
+  }
+
   return (
-    <form>
-      <FieldGroup>
-        <FormField
-          label="Full Name"
-          type="text"
-          placeholder="Enter your name"
-        />
-        <FormField label="Email" type="email" placeholder="Enter your email" />
-
-        {isRegister ? (
-          confirmPasswordFields
-        ) : (
+    <FormProvider {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <FieldGroup>
           <FormField
-            label="Password"
-            type="password"
-            placeholder="Enter your password"
+            name="name"
+            label="Full Name"
+            type="text"
+            placeholder="Enter your name"
           />
-        )}
+          <FormField
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="Enter your email"
+          />
 
-        <Field>
-          {isRegister ? <Button>Sign up</Button> : <Button>Sign in</Button>}
-        </Field>
-
-        <footer className="flex justify-between items-center">
           {isRegister ? (
-            <p>
-              <span className="text-muted-foreground">
-                Already have an account?
-              </span>{" "}
-              <Link href="/login">Sign in</Link>
-            </p>
+            confirmPasswordFields
           ) : (
-            <p>
-              <span className="text-muted-foreground">
-                Don't have an account?
-              </span>{" "}
-              <Link href="/register">Sign up</Link>
-            </p>
+            <FormField
+              name="password"
+              label="Password"
+              type="password"
+              placeholder="Enter your password"
+            />
           )}
-          <p>Forgot password?</p>
-        </footer>
-      </FieldGroup>
-    </form>
+
+          <Field>
+            {isRegister ? <Button>Sign up</Button> : <Button>Sign in</Button>}
+          </Field>
+
+          <footer className="flex justify-between items-center">
+            {isRegister ? (
+              <p>
+                <span className="text-muted-foreground">
+                  Already have an account?
+                </span>{" "}
+                <Link href="/login">Sign in</Link>
+              </p>
+            ) : (
+              <p>
+                <span className="text-muted-foreground">
+                  Don't have an account?
+                </span>{" "}
+                <Link href="/register">Sign up</Link>
+              </p>
+            )}
+            <p>Forgot password?</p>
+          </footer>
+        </FieldGroup>
+      </form>
+    </FormProvider>
   );
 }
