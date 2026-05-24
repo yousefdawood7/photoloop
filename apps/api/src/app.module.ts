@@ -30,6 +30,11 @@ import { ConfigService } from './config/config.service';
             schema,
           }),
           socialProviders: {
+            github: {
+              clientId: configService.env().GITHUB_CLIENT_ID,
+              clientSecret: configService.env().GITHUB_CLIENT_SECRET,
+            },
+
             facebook: {
               clientId: configService.env().FACEBOOK_CLIENT_ID,
               clientSecret: configService.env().FACEBOOK_CLIENT_SECRET,
