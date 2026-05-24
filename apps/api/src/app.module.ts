@@ -3,6 +3,7 @@ import { render } from '@react-email/render';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { oneTap } from 'better-auth/plugins';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { ResendModule, ResendService } from 'nestjs-resend';
 
@@ -25,7 +26,7 @@ import { ConfigService } from './config/config.service';
       ) => ({
         auth: betterAuth({
           baseURL: configService.env().BETTER_AUTH_URL,
-
+          plugins: [oneTap()],
           database: drizzleAdapter(drizzle, {
             provider: 'pg',
             usePlural: true,
@@ -45,7 +46,6 @@ import { ConfigService } from './config/config.service';
               clientSecret: configService.env().FACEBOOK_CLIENT_SECRET,
             },
           },
-
           emailAndPassword: {
             enabled: true,
             requireEmailVerification: true,

@@ -1,3 +1,5 @@
+import "./app/env";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typedRoutes: true,
