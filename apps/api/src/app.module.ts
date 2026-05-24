@@ -3,7 +3,7 @@ import { render } from '@react-email/render';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { oneTap, twoFactor } from 'better-auth/plugins';
+import { magicLink, oneTap, twoFactor } from 'better-auth/plugins';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { ResendModule, ResendService } from 'nestjs-resend';
 
@@ -27,7 +27,15 @@ import { ConfigService } from './config/config.service';
         auth: betterAuth({
           appName: 'Photoloop',
           baseURL: configService.env().BETTER_AUTH_URL,
-          plugins: [oneTap(), twoFactor()],
+          plugins: [
+            oneTap(),
+            twoFactor(),
+            magicLink({
+              sendMagicLink: async ({ email, token, url, metadata }, ctx) => {
+                // send email to user
+              },
+            }),
+          ],
           database: drizzleAdapter(drizzle, {
             provider: 'pg',
             usePlural: true,

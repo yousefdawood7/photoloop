@@ -1,5 +1,9 @@
 import { env } from "@/lib/env";
-import { oneTapClient, twoFactorClient } from "better-auth/client/plugins";
+import {
+  magicLinkClient,
+  oneTapClient,
+  twoFactorClient,
+} from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
@@ -7,6 +11,7 @@ export const authClient = createAuthClient({
 
   plugins: [
     twoFactorClient(),
+    magicLinkClient(),
     oneTapClient({
       clientId: env.GOOGLE_CLIENT_ID,
 
