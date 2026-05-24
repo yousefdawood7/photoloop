@@ -24,17 +24,22 @@ import { ConfigService } from './config/config.service';
         configService: ConfigService,
       ) => ({
         auth: betterAuth({
+          baseURL: configService.env().BETTER_AUTH_URL,
+
           database: drizzleAdapter(drizzle, {
             provider: 'pg',
             usePlural: true,
             schema,
           }),
           socialProviders: {
+            google: {
+              clientId: configService.env().GOOGLE_CLIENT_ID,
+              clientSecret: configService.env().GOOGLE_CLIENT_SECRET,
+            },
             github: {
               clientId: configService.env().GITHUB_CLIENT_ID,
               clientSecret: configService.env().GITHUB_CLIENT_SECRET,
             },
-
             facebook: {
               clientId: configService.env().FACEBOOK_CLIENT_ID,
               clientSecret: configService.env().FACEBOOK_CLIENT_SECRET,

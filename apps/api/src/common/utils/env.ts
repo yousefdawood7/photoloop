@@ -10,6 +10,9 @@ export const env = createEnv({
     BETTER_AUTH_SECRET: z.string().min(32).max(128),
     RESEND_API_KEY: z.string().min(32).max(128),
 
+    GOOGLE_CLIENT_ID: z.string().min(10).max(100),
+    GOOGLE_CLIENT_SECRET: z.string().min(32).max(128),
+
     GITHUB_CLIENT_ID: z.string().min(10).max(100),
     GITHUB_CLIENT_SECRET: z.string().min(32).max(128),
 
