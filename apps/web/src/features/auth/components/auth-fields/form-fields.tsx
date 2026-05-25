@@ -1,6 +1,6 @@
 "use client";
 
-import { loginSchema, registerSchema } from "@/app/lib/schemas";
+import { loginSchema, registerSchema } from "@/lib/schemas";
 import FormField from "@/features/auth/components/auth-fields/form-field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@repo/ui/components/button";
