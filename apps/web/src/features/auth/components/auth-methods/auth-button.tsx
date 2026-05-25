@@ -1,3 +1,4 @@
+import useAuthProvider from "@/features/auth/hooks/useAuthProvider";
 import type { AuthButtonType } from "@/features/auth/types";
 import { authClient } from "@/lib/auth-client";
 import { env } from "@/lib/env";
@@ -20,26 +21,11 @@ export default function AuthButton({
   isSignIn,
   setSignIn,
 }: AuthButtonProps) {
-  const [isPending, startTransition] = useTransition();
-
-  function handleSignin() {
-    startTransition(() => {
-      authClient.signIn.social({
-        provider: methodName,
-        callbackURL: `${env.NEXT_PUBLIC_APP_URL}/`,
-
-        fetchOptions: {
-          onSuccess() {
-            setSignIn(true);
-          },
-
-          onError() {
-            toast.error(`Failed to sign in with ${methodTitle}`);
-          },
-        },
-      });
-    });
-  }
+  const { isPending, handleSignin } = useAuthProvider({
+    methodName,
+    methodTitle,
+    setSignIn,
+  });
 
   return (
     <Button
