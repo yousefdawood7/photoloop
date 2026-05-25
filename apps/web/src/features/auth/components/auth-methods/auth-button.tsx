@@ -1,23 +1,29 @@
+"use client";
+
+import type { AuthButtonType } from "@/features/auth/types";
 import { Button } from "@repo/ui/components/button";
 import { cn } from "@repo/ui/lib/utils";
+import { useRouter } from "next/navigation";
 
 type AuthButtonProps = {
-  title: string;
-  className?: string;
-  authLogo: React.ReactElement;
-  signInMethod?: "github" | "google" | "facebook" | "magic-link";
-};
+  isSignIn: boolean;
+  setSignIn: (isSignIn: boolean) => void;
+} & AuthButtonType;
 
 export default function AuthButton({
-  title,
-  className,
+  methodName,
+  methodTitle,
   authLogo,
-  signInMethod,
+  isSpan,
+  isSignIn,
+  setSignIn,
 }: AuthButtonProps) {
+  const router = useRouter();
+
   return (
-    <Button variant={"outline"} className={cn("py-5", className)}>
+    <Button variant={"outline"} className={cn("py-5", isSpan && "col-span-2")}>
       {authLogo}
-      {title}
+      <span>Sign in with {methodTitle}</span>
     </Button>
   );
 }
