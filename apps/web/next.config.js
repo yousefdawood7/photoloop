@@ -12,7 +12,7 @@ const nextConfig = {
     return [
       {
         source: "/api/auth/:slug*",
-        destination: "http://localhost:3000/api/auth/:slug*",
+        destination: "http://localhost:3001/api/auth/:slug*",
       },
     ];
   },

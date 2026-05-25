@@ -27,12 +27,11 @@ import { ConfigService } from './config/config.service';
         auth: betterAuth({
           appName: 'Photoloop',
           baseURL: configService.env().BETTER_AUTH_URL,
+          trustedOrigins: [configService.env().FRONTEND_URL],
           plugins: [
             oneTap(),
             twoFactor(),
-            openAPI({
-              path: '/docs/auth',
-            }),
+            openAPI(),
             magicLink({
               sendMagicLink: async ({ email, token, url, metadata }, ctx) => {
                 // send email to user
@@ -79,7 +78,6 @@ import { ConfigService } from './config/config.service';
             sendOnSignUp: true,
             sendOnSignIn: true,
             autoSignInAfterVerification: true,
-            trustedOrigins: ['http://localhost:3000'],
           },
         }),
       }),
