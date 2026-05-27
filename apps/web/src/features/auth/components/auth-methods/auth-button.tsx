@@ -1,4 +1,4 @@
-import MagicLinkField from "@/features/auth/components/auth-methods/magic-link-field";
+import MagicLinkField from "@/features/auth/components/auth-methods/magic-link/magic-link-field";
 import useAuthProvider from "@/features/auth/hooks/useAuthProvider";
 import type { AuthButtonType } from "@/features/auth/types";
 import { Button } from "@repo/ui/components/button";
@@ -46,12 +46,17 @@ export default function AuthButton({
     ),
   };
 
-  // prettier-ignore
-  if (methodName === "magic-link") 
-    return <MagicLinkField button={<Button {...buttonProps} >
-      {isPending ? <Spinner /> : authLogo}
-<span>Sign in with {methodTitle}</span>
-    </Button>} />;
+  if (methodName === "magic-link")
+    return (
+      <MagicLinkField
+        button={
+          <Button {...buttonProps}>
+            {isPending ? <Spinner /> : authLogo}
+            <span>Sign in with {methodTitle}</span>
+          </Button>
+        }
+      />
+    );
 
   return (
     <Button {...buttonProps} onClick={handleSignin}>
