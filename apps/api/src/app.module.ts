@@ -10,7 +10,7 @@ import { ResendModule, ResendService } from 'nestjs-resend';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { schema } from './common/db/schemas';
-import { VerifyEmailTemplate } from './common/emails/verify-email';
+import { EmailTemplate } from './common/emails/email-template';
 import { KEYS } from './common/utils/key';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
@@ -33,8 +33,20 @@ import { ConfigService } from './config/config.service';
             twoFactor(),
             openAPI(),
             magicLink({
-              sendMagicLink: async ({ email, token, url, metadata }, ctx) => {
-                // send email to user
+              sendMagicLink: async ({ email, url }) => {
+                void resendService.send({
+                  from: 'Photoloop <hello@yousefdawood.me>',
+                  to: email,
+                  subject: 'Your magic link for Photoloop',
+
+                  html: await render(
+                    EmailTemplate({
+                      name: 'Yousef Dawood',
+                      magicLink: url,
+                      variant: 'magic-link',
+                    }),
+                  ),
+                });
               },
             }),
           ],
@@ -71,7 +83,11 @@ import { ConfigService } from './config/config.service';
                 subject: 'Verify your email for Photoloop',
 
                 html: await render(
-                  VerifyEmailTemplate({ name: 'Yousef Dawood', otp: '123456' }),
+                  EmailTemplate({
+                    name: 'Yousef Dawood',
+                    otp: '123456',
+                    variant: 'otp',
+                  }),
                 ),
               });
             },

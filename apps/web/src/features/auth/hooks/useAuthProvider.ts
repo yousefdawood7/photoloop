@@ -8,12 +8,14 @@ type UseAuthProviderType = {
   methodName: AuthMethodsType;
   methodTitle: string;
   setSignIn: (isSignIn: boolean) => void;
+  email?: string;
 };
 
 export default function useAuthProvider({
   methodName,
   methodTitle,
   setSignIn,
+  email,
 }: UseAuthProviderType) {
   const [isPending, startTransition] = useTransition();
 
@@ -28,10 +30,15 @@ export default function useAuthProvider({
   };
 
   function handleSignin() {
+    if (!email) {
+      toast.error("Email is required");
+      return;
+    }
+
     startTransition(() => {
       if (methodName === "magic-link") {
         authClient.signIn.magicLink({
-          email: "",
+          email,
           callbackURL: `${env.NEXT_PUBLIC_APP_URL}/`,
           fetchOptions,
         });
