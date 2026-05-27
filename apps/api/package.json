@@ -18,7 +18,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "db:reset": "tsx ./src/common/scripts/db-reset.ts"
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "^1.6.10",
@@ -32,6 +33,7 @@
     "better-auth": "^1.6.10",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
+    "drizzle-seed": "^0.3.1",
     "nestjs-resend": "^1.1.0",
     "pg": "^8.20.0",
     "react": "^19.2.6",
