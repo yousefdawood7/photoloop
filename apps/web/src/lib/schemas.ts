@@ -25,6 +25,13 @@ const authSchema = z
   });
 
 export const loginSchema = authSchema;
+export const magicLinkSchema = z.object({
+  email: z
+    .string({ error: "Email is required" })
+    .min(1, { error: "Email is required" }) // for handling empty string case
+    .pipe(z.email({ error: "Invalid email format" })),
+});
+
 export const registerSchema = authSchema.refine(
   (val) => val.password === val.confirmPassword,
   {
