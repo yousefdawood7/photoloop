@@ -1,4 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
+import { usePathname } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@repo/ui/components/button";
 import { DialogFooter } from "@repo/ui/components/dialog";
@@ -16,20 +17,27 @@ export default function MagicLinkForm({
   children,
   className,
 }: MagicLinkFormProps) {
+  const pathname = usePathname();
   const { isPending, isError, handleSignin } = useAuthProvider({
     methodName: "magic-link",
     methodTitle: "Magic Link",
   });
 
-  const form = useForm<z.infer<typeof magicLinkSchema>>({
-    resolver: zodResolver(magicLinkSchema),
+  const formMagicLinkSchema =
+    pathname === "/register"
+      ? magicLinkSchema
+      : magicLinkSchema.partial({ name: true });
+
+  const { ...form } = useForm<z.infer<typeof formMagicLinkSchema>>({
+    resolver: zodResolver(formMagicLinkSchema),
     defaultValues: {
+      name: "",
       email: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof magicLinkSchema>) {
-    handleSignin(data.email);
+  function onSubmit(data: z.infer<typeof formMagicLinkSchema>) {
+    handleSignin(data.name, data.email);
   }
 
   return (

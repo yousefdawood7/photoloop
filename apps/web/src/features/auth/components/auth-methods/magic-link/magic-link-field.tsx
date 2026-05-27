@@ -1,3 +1,4 @@
+import { usePathname } from "next/navigation";
 import {
   Dialog,
   DialogContent,
@@ -14,18 +15,29 @@ type MagicLinkFieldProps = {
 };
 
 export default function MagicLinkField({ button }: MagicLinkFieldProps) {
+  const pathname = usePathname();
+
   return (
     <Dialog>
       <DialogTrigger asChild>{button}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
-        <MagicLinkForm className="space-y-4">
+        <MagicLinkForm className="space-y-2">
           <DialogHeader>
             <DialogTitle>Sign in with Magic Link</DialogTitle>
             <DialogDescription>
-              Enter your email address and we&apos;ll send you a magic link to
-              sign in to your account.
+              Enter your name and email address and we&apos;ll send you a magic
+              link to sign in to your account.
             </DialogDescription>
           </DialogHeader>
+          {pathname === "/register" && (
+            <FormField
+              name="name"
+              label="Name"
+              type="text"
+              placeholder="Enter your name"
+              isSingleField
+            />
+          )}
           <FormField
             name="email"
             label="Email"

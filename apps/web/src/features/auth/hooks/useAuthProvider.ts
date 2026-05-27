@@ -16,9 +16,9 @@ export default function useAuthProvider({
   setSignIn,
 }: UseAuthProviderType) {
   /*
-  the null part is just for the initial state
-  where we don't know if there is an error or not,
-  after the first attempt it will be either true or false
+    the null part is just for the initial state
+    where we don't know if there is an error or not,
+    after the first attempt it will be either true or false
   */
   const [isError, setIsError] = useState<boolean | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -35,17 +35,23 @@ export default function useAuthProvider({
     },
   };
 
-  function handleSignin(email?: string) {
+  function handleSignin(name?: string, email?: string) {
     if (!email && methodName === "magic-link") {
-      toast.error("Email is required");
+      toast.error("Email is required for magic link sign in");
       return;
     }
 
     startTransition(async () => {
       if (methodName === "magic-link") {
         const { error } = await authClient.signIn.magicLink({
+          // will only be used during the sign up process, if the user is signing in for the first time (won't be passed to email template)
+          ...(name && { name }),
           email: email!,
           callbackURL: `${env.NEXT_PUBLIC_APP_URL}/`,
+
+          metadata: {
+            name: name || "", // will be used in the email template
+          },
           fetchOptions: {
             ...fetchOptions,
 

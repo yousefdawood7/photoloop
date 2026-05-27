@@ -40,7 +40,7 @@ import { ConfigService } from './config/config.service';
             openAPI(),
             lastLoginMethod(),
             magicLink({
-              sendMagicLink: async ({ email, url }) => {
+              sendMagicLink: async ({ email, url, metadata }) => {
                 void resendService.send({
                   from: 'Photoloop <hello@yousefdawood.me>',
                   to: email,
@@ -48,7 +48,7 @@ import { ConfigService } from './config/config.service';
 
                   html: await render(
                     EmailTemplate({
-                      name: 'Yousef Dawood',
+                      name: (metadata?.name || '') as string,
                       magicLink: url,
                       variant: 'magic-link',
                     }),
@@ -91,7 +91,7 @@ import { ConfigService } from './config/config.service';
 
                 html: await render(
                   EmailTemplate({
-                    name: 'Yousef Dawood',
+                    name: user.name,
                     otp: '123456',
                     variant: 'otp',
                   }),

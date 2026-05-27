@@ -25,7 +25,12 @@ const authSchema = z
   });
 
 export const loginSchema = authSchema;
+
 export const magicLinkSchema = z.object({
+  name: z
+    .string({ error: "Name is required" })
+    .min(3, { error: "Name should be at least 3 characters" }),
+
   email: z
     .string({ error: "Email is required" })
     .min(1, { error: "Email is required" }) // for handling empty string case
