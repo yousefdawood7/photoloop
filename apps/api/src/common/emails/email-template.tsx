@@ -42,8 +42,7 @@ export function EmailTemplate({
           }}
         >
           <img
-            // Replace after deploying
-            src="https://i.ibb.co/67wqpNFY/Logomark-1.png"
+            src="TODO" // TODO SETUP THROUGH TUNNEL OR AFTER DEPLOYMENT
             alt="Photoloop"
             width="34"
             height="34"

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -15,10 +14,8 @@ type MagicLinkFieldProps = {
 };
 
 export default function MagicLinkField({ button }: MagicLinkFieldProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog>
       <DialogTrigger asChild>{button}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <MagicLinkForm className="space-y-4">
