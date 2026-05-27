@@ -36,7 +36,7 @@ export default function useAuthProvider({
   };
 
   function handleSignin(email?: string) {
-    if (!email) {
+    if (!email && methodName === "magic-link") {
       toast.error("Email is required");
       return;
     }
@@ -44,7 +44,7 @@ export default function useAuthProvider({
     startTransition(async () => {
       if (methodName === "magic-link") {
         const { error } = await authClient.signIn.magicLink({
-          email,
+          email: email!,
           callbackURL: `${env.NEXT_PUBLIC_APP_URL}/`,
           fetchOptions: {
             ...fetchOptions,
