@@ -1,7 +1,6 @@
 import { Button } from "@repo/ui/components/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,

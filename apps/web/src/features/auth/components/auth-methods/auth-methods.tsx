@@ -6,7 +6,7 @@ import { FacebookIcon as Facebook } from "@repo/ui/components/svgs/facebookIcon"
 import { GithubDark } from "@repo/ui/components/svgs/githubDark";
 import { Google } from "@repo/ui/components/svgs/google";
 import AuthButton from "@/features/auth/components/auth-methods/auth-button";
-import type { AuthButtonType, AuthMethodsType } from "@/features/auth/types";
+import type { AuthButtonType } from "@/features/auth/types";
 
 const authButtons: AuthButtonType[] = [
   {

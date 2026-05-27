@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, ViewTransition } from "react";
+import { useId, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "@repo/ui/components/field";
 import { Input } from "@repo/ui/components/input";
