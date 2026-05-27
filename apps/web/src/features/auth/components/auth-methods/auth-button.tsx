@@ -47,7 +47,7 @@ export default function AuthButton({
     );
 
   return (
-    <Button {...buttonProps} onClick={handleSignin}>
+    <Button {...buttonProps} onClick={() => handleSignin()}>
       {isPending ? <Spinner /> : authLogo}
       <span>Sign in with {methodTitle}</span>
     </Button>

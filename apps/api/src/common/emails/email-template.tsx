@@ -43,7 +43,7 @@ export function EmailTemplate({
         >
           <img
             // Replace after deploying
-            src="YOUR_LOGO_URL"
+            src="https://i.ibb.co/67wqpNFY/Logomark-1.png"
             alt="Photoloop"
             width="34"
             height="34"

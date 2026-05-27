@@ -1,9 +1,8 @@
-import { Button } from "@repo/ui/components/button";
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -16,16 +15,18 @@ type MagicLinkFieldProps = {
 };
 
 export default function MagicLinkField({ button }: MagicLinkFieldProps) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{button}</DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <MagicLinkForm className="space-y-4">
           <DialogHeader>
             <DialogTitle>Sign in with Magic Link</DialogTitle>
             <DialogDescription>
-              Enter your email address and we'll send you a magic link to sign
-              in to your account.
+              Enter your email address and we&apos;ll send you a magic link to
+              sign in to your account.
             </DialogDescription>
           </DialogHeader>
           <FormField
@@ -35,11 +36,6 @@ export default function MagicLinkField({ button }: MagicLinkFieldProps) {
             placeholder="Enter your email"
             isSingleField
           />
-          <DialogFooter className="sm:justify-start">
-            {/* <DialogClose asChild> */}
-            <Button type="submit">Sign in</Button>
-            {/* </DialogClose> */}
-          </DialogFooter>
         </MagicLinkForm>
       </DialogContent>
     </Dialog>

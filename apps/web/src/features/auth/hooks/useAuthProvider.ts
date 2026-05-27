@@ -1,4 +1,4 @@
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "@repo/ui/lib/sonner";
 import { AuthMethodsType } from "@/features/auth/types";
 import { authClient } from "@/lib/auth-client";
@@ -7,41 +7,63 @@ import { env } from "@/lib/env";
 type UseAuthProviderType = {
   methodName: AuthMethodsType;
   methodTitle: string;
-  setSignIn: (isSignIn: boolean) => void;
-  email?: string;
+  setSignIn?: (isSignIn: boolean) => void;
 };
 
 export default function useAuthProvider({
   methodName,
   methodTitle,
   setSignIn,
-  email,
 }: UseAuthProviderType) {
+  /*
+  the null part is just for the initial state
+  where we don't know if there is an error or not,
+  after the first attempt it will be either true or false
+  */
+  const [isError, setIsError] = useState<boolean | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const fetchOptions = {
     onSuccess() {
-      setSignIn(true);
+      setSignIn?.(true);
+      setIsError(false);
     },
 
     onError() {
+      setIsError(true);
       toast.error(`Failed to sign in with ${methodTitle}`);
     },
   };
 
-  function handleSignin() {
+  function handleSignin(email?: string) {
     if (!email) {
       toast.error("Email is required");
       return;
     }
 
-    startTransition(() => {
+    startTransition(async () => {
       if (methodName === "magic-link") {
-        authClient.signIn.magicLink({
+        const { error } = await authClient.signIn.magicLink({
           email,
           callbackURL: `${env.NEXT_PUBLIC_APP_URL}/`,
-          fetchOptions,
+          fetchOptions: {
+            ...fetchOptions,
+
+            onSuccess() {
+              setSignIn?.(true);
+              setIsError(false);
+              toast.success(`Magic link sent to ${email}`);
+            },
+          },
         });
+
+        if (error) {
+          startTransition(() => {
+            setIsError(true);
+            return;
+          });
+        }
+        setIsError(false);
         return;
       }
 
@@ -53,5 +75,5 @@ export default function useAuthProvider({
     });
   }
 
-  return { isPending, handleSignin };
+  return { isPending, isError, handleSignin };
 }
