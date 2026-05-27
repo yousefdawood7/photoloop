@@ -11,7 +11,7 @@ type AuthFormsProps = {
 
 export default function AuthForms({ isRegister = false }: AuthFormsProps) {
   return (
-    <div className="flex flex-col items-center w-full py-5 px-4">
+    <div className="flex flex-col items-center w-full py-5 px-4 gap-3">
       <AuthHeader />
       <ViewTransition
         name="auth-form"

@@ -1,12 +1,21 @@
+import MagicLinkField from "@/features/auth/components/auth-methods/magic-link-field";
 import useAuthProvider from "@/features/auth/hooks/useAuthProvider";
 import type { AuthButtonType } from "@/features/auth/types";
-import { authClient } from "@/lib/auth-client";
-import { env } from "@/lib/env";
 import { Button } from "@repo/ui/components/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@repo/ui/components/dialog";
+import { Input } from "@repo/ui/components/input";
+import { Label } from "@repo/ui/components/label";
 import { Spinner } from "@repo/ui/components/spinner";
-import { toast } from "@repo/ui/lib/sonner";
 import { cn } from "@repo/ui/lib/utils";
-import { useTransition } from "react";
 
 type AuthButtonProps = {
   isSignIn: boolean;
@@ -27,17 +36,25 @@ export default function AuthButton({
     setSignIn,
   });
 
+  const buttonProps = {
+    variant: "outline" as const,
+    disabled: isSignIn || isPending,
+    className: cn(
+      "py-5",
+      isSpan &&
+        "col-span-1 mq-w-416:col-span-2 mq-w-800:col-span-1 mq-w-860:col-span-2 ",
+    ),
+  };
+
+  // prettier-ignore
+  if (methodName === "magic-link") 
+    return <MagicLinkField button={<Button {...buttonProps} >
+      {isPending ? <Spinner /> : authLogo}
+<span>Sign in with {methodTitle}</span>
+    </Button>} />;
+
   return (
-    <Button
-      variant={"outline"}
-      disabled={isSignIn || isPending}
-      className={cn(
-        "py-5",
-        isSpan &&
-          "col-span-1 mq-w-416:col-span-2 mq-w-800:col-span-1 mq-w-860:col-span-2 ",
-      )}
-      onClick={handleSignin}
-    >
+    <Button {...buttonProps} onClick={handleSignin}>
       {isPending ? <Spinner /> : authLogo}
       <span>Sign in with {methodTitle}</span>
     </Button>

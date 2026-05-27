@@ -12,6 +12,7 @@ type FormFieldProps = {
   type?: string;
   name: string;
   placeholder?: string;
+  isSingleField?: boolean;
 };
 
 export default function FormField({
@@ -19,6 +20,7 @@ export default function FormField({
   label,
   name,
   placeholder,
+  isSingleField = false,
 }: FormFieldProps) {
   const id = useId();
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
@@ -58,7 +60,8 @@ export default function FormField({
           </div>
           <div
             className={cn(
-              "min-h-8 transition-opacity",
+              "transition-opacity",
+              !isSingleField && "min-h-8",
               fieldState.invalid ? "opacity-100" : "opacity-0",
             )}
           >
