@@ -3,7 +3,13 @@ import { render } from '@react-email/render';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
-import { magicLink, oneTap, openAPI, twoFactor } from 'better-auth/plugins';
+import {
+  lastLoginMethod,
+  magicLink,
+  oneTap,
+  openAPI,
+  twoFactor,
+} from 'better-auth/plugins';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { ResendModule, ResendService } from 'nestjs-resend';
 
@@ -32,6 +38,7 @@ import { ConfigService } from './config/config.service';
             oneTap(),
             twoFactor(),
             openAPI(),
+            lastLoginMethod(),
             magicLink({
               sendMagicLink: async ({ email, url }) => {
                 void resendService.send({
