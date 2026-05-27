@@ -3,7 +3,7 @@ import Silk from "@repo/ui/components/Silk";
 
 export default function AuthBackground() {
   return (
-    <div className="relative w-full max-w-[500px] xl:max-w-[700px]">
+    <div className="relative w-full max-w-[450px] xl:max-w-[700px] hidden mq-w-800:[display:initial]">
       <AuthMessage />
 
       <Silk

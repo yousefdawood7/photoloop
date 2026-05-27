@@ -37,7 +37,7 @@ export default function AuthMethods() {
   const [isSignIn, setIsSignIn] = useState<boolean>(false);
 
   return (
-    <article className="grid grid-cols-2 gap-5">
+    <article className="grid grid-cols-1 mq-w-416:grid-cols-2 mq-w-800:grid-cols-1 mq-w-860:grid-cols-2 gap-5">
       {authButtons.map((button) => (
         <AuthButton
           {...button}

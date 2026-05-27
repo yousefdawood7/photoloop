@@ -58,7 +58,7 @@ export default function FormField({
           </div>
           <div
             className={cn(
-              "min-h-5 transition-opacity",
+              "min-h-8 transition-opacity",
               fieldState.invalid ? "opacity-100" : "opacity-0",
             )}
           >

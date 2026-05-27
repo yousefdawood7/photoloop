@@ -31,7 +31,11 @@ export default function AuthButton({
     <Button
       variant={"outline"}
       disabled={isSignIn || isPending}
-      className={cn("py-5", isSpan && "col-span-2")}
+      className={cn(
+        "py-5",
+        isSpan &&
+          "col-span-1 mq-w-416:col-span-2 mq-w-800:col-span-1 mq-w-860:col-span-2 ",
+      )}
       onClick={handleSignin}
     >
       {isPending ? <Spinner /> : authLogo}
