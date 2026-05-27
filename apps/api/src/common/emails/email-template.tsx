@@ -1,12 +1,20 @@
 import React from 'react';
 
-export function VerifyEmailTemplate({
+interface EmailTemplateProps {
+  name?: string;
+  otp?: string;
+  magicLink?: string;
+  variant: 'otp' | 'magic-link';
+}
+
+export function EmailTemplate({
   name,
   otp,
-}: {
-  name?: string;
-  otp: string;
-}): React.JSX.Element {
+  magicLink,
+  variant,
+}: EmailTemplateProps): React.JSX.Element {
+  const isOtp = variant === 'otp';
+
   return (
     <div
       style={{
@@ -34,8 +42,8 @@ export function VerifyEmailTemplate({
           }}
         >
           <img
-            // src="cid:logo-image"
-            src="https://i.ibb.co/67wqpNFY/Logomark-1.png"
+            // Replace after deploying
+            src="YOUR_LOGO_URL"
             alt="Photoloop"
             width="34"
             height="34"
@@ -61,10 +69,12 @@ export function VerifyEmailTemplate({
             Photoloop
           </span>
         </div>
+
         {/* Heading */}
         <h1
           style={{
-            fontSize: '40px',
+            fontSize: '36px',
+            lineHeight: '42px',
             fontWeight: 700,
             marginTop: 0,
             marginBottom: '18px',
@@ -73,7 +83,7 @@ export function VerifyEmailTemplate({
             color: '#FAFAFA',
           }}
         >
-          Verify your email
+          {isOtp ? 'Verify your email' : 'Sign in to Photoloop'}
         </h1>
 
         {/* Description */}
@@ -86,35 +96,72 @@ export function VerifyEmailTemplate({
             textAlign: 'center',
           }}
         >
-          {name ? `Hey ${name},` : 'Welcome to Photoloop.'}
+          {name
+            ? `Hey ${name},`
+            : isOtp
+              ? 'Welcome to Photoloop.'
+              : 'Welcome back.'}
+
           <br />
           <br />
-          Use the verification code below to continue creating your account.
+
+          {isOtp
+            ? 'Use the verification code below to continue creating your account.'
+            : 'Click the button below to securely sign in to your account.'}
         </p>
 
-        {/* OTP Box */}
-        <div
-          style={{
-            background: '#181818',
-            border: '1px solid #2A2A2A',
-            borderRadius: '20px',
-            padding: '24px',
-            textAlign: 'center',
-            marginBottom: '24px',
-          }}
-        >
-          <p
+        {/* OTP */}
+        {isOtp && otp && (
+          <div
             style={{
-              fontSize: '42px',
-              letterSpacing: '0.22em',
-              fontWeight: 700,
-              margin: 0,
-              color: '#FAFAFA',
+              background: '#181818',
+              border: '1px solid #2A2A2A',
+              borderRadius: '20px',
+              padding: '24px',
+              textAlign: 'center',
+              marginBottom: '24px',
+              boxShadow: 'inset 0 0 0 1px #2A2A2A',
             }}
           >
-            {otp.split('').join(' ')}
-          </p>
-        </div>
+            <p
+              style={{
+                fontSize: '42px',
+                letterSpacing: '0.22em',
+                fontWeight: 700,
+                margin: 0,
+                color: '#FAFAFA',
+              }}
+            >
+              {otp.split('').join(' ')}
+            </p>
+          </div>
+        )}
+
+        {/* Magic Link */}
+        {!isOtp && magicLink && (
+          <div
+            style={{
+              textAlign: 'center',
+              marginBottom: '24px',
+            }}
+          >
+            <a
+              href={magicLink}
+              style={{
+                background: '#FAFAFA',
+                color: '#0A0A0A',
+                padding: '14px 28px',
+                borderRadius: '14px',
+                textDecoration: 'none',
+                fontWeight: 600,
+                fontSize: '15px',
+                display: 'inline-block',
+              }}
+            >
+              Sign in to Photoloop
+            </a>
+          </div>
+        )}
 
         {/* Expiration */}
         <p
@@ -125,7 +172,7 @@ export function VerifyEmailTemplate({
             textAlign: 'center',
           }}
         >
-          This code expires in 10 minutes.
+          This {isOtp ? 'code' : 'magic link'} expires in 10 minutes.
         </p>
 
         {/* Divider */}
@@ -133,7 +180,7 @@ export function VerifyEmailTemplate({
           style={{
             height: '1px',
             background: '#222',
-            margin: '28px 0',
+            margin: '36px 0 28px',
           }}
         />
 
