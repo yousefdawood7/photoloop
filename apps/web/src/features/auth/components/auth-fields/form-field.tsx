@@ -1,11 +1,11 @@
 "use client";
 
-import TogglePassword from "@/features/auth/components/auth-fields/toggle-password";
+import { useId, useState, ViewTransition } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "@repo/ui/components/field";
 import { Input } from "@repo/ui/components/input";
 import { cn } from "@repo/ui/lib/utils";
-import { useId, useState, ViewTransition } from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import TogglePassword from "@/features/auth/components/auth-fields/toggle-password";
 
 type FormFieldProps = {
   label: string;

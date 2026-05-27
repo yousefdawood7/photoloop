@@ -1,5 +1,5 @@
-import AuthBackground from "@/features/auth/components/auth-background";
 import { Separator } from "@repo/ui/components/separator";
+import AuthBackground from "@/features/auth/components/auth-background";
 
 export default function Layout({ children }: LayoutProps<"/">) {
   return (

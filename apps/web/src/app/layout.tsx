@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@repo/ui/components/themes/theme-provider";
 import { Toaster } from "@repo/ui/components/sonner";
+import { ThemeProvider } from "@repo/ui/components/themes/theme-provider";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",

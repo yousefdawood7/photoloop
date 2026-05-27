@@ -1,6 +1,3 @@
-import MagicLinkField from "@/features/auth/components/auth-methods/magic-link/magic-link-field";
-import useAuthProvider from "@/features/auth/hooks/useAuthProvider";
-import type { AuthButtonType } from "@/features/auth/types";
 import { Button } from "@repo/ui/components/button";
 import {
   Dialog,
@@ -16,6 +13,9 @@ import { Input } from "@repo/ui/components/input";
 import { Label } from "@repo/ui/components/label";
 import { Spinner } from "@repo/ui/components/spinner";
 import { cn } from "@repo/ui/lib/utils";
+import MagicLinkField from "@/features/auth/components/auth-methods/magic-link/magic-link-field";
+import useAuthProvider from "@/features/auth/hooks/useAuthProvider";
+import type { AuthButtonType } from "@/features/auth/types";
 
 type AuthButtonProps = {
   isSignIn: boolean;

@@ -1,8 +1,8 @@
+import { useTransition } from "react";
+import { toast } from "@repo/ui/lib/sonner";
 import { AuthMethodsType } from "@/features/auth/types";
 import { authClient } from "@/lib/auth-client";
 import { env } from "@/lib/env";
-import { toast } from "@repo/ui/lib/sonner";
-import { useTransition } from "react";
 
 type UseAuthProviderType = {
   methodName: AuthMethodsType;

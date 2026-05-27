@@ -1,5 +1,3 @@
-import FormField from "@/features/auth/components/auth-fields/form-field";
-import MagicLinkForm from "@/features/auth/components/auth-methods/magic-link/magic-link-form";
 import { Button } from "@repo/ui/components/button";
 import {
   Dialog,
@@ -11,6 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@repo/ui/components/dialog";
+import FormField from "@/features/auth/components/auth-fields/form-field";
+import MagicLinkForm from "@/features/auth/components/auth-methods/magic-link/magic-link-form";
 
 type MagicLinkFieldProps = {
   button: React.ReactElement;

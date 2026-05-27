@@ -1,13 +1,13 @@
 "use client";
 
-import { loginSchema, registerSchema } from "@/lib/schemas";
-import FormField from "@/features/auth/components/auth-fields/form-field";
+import { FormProvider, useForm } from "react-hook-form";
+import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@repo/ui/components/button";
 import { Field, FieldGroup } from "@repo/ui/components/ui/field";
-import Link from "next/link";
-import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
+import FormField from "@/features/auth/components/auth-fields/form-field";
+import { loginSchema, registerSchema } from "@/lib/schemas";
 
 type FormFieldsProps = {
   isRegister?: boolean;

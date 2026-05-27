@@ -1,11 +1,11 @@
 "use client";
 
-import AuthButton from "@/features/auth/components/auth-methods/auth-button";
+import React, { useState } from "react";
+import { LucideMail } from "@repo/ui/components/icons";
+import { FacebookIcon as Facebook } from "@repo/ui/components/svgs/facebookIcon";
 import { GithubDark } from "@repo/ui/components/svgs/githubDark";
 import { Google } from "@repo/ui/components/svgs/google";
-import { FacebookIcon as Facebook } from "@repo/ui/components/svgs/facebookIcon";
-import { LucideMail } from "@repo/ui/components/icons";
-import React, { useState } from "react";
+import AuthButton from "@/features/auth/components/auth-methods/auth-button";
 import type { AuthButtonType, AuthMethodsType } from "@/features/auth/types";
 
 const authButtons: AuthButtonType[] = [

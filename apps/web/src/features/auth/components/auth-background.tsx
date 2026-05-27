@@ -1,5 +1,5 @@
-import AuthMessage from "@/features/auth/components/auth-message";
 import Silk from "@repo/ui/components/Silk";
+import AuthMessage from "@/features/auth/components/auth-message";
 
 export default function AuthBackground() {
   return (

@@ -1,5 +1,5 @@
-import { LucideEye, LucideEyeOff } from "@repo/ui/components/icons";
 import { Button } from "@repo/ui/components/button";
+import { LucideEye, LucideEyeOff } from "@repo/ui/components/icons";
 
 type TogglePasswordProps = {
   isPasswordShown: boolean;

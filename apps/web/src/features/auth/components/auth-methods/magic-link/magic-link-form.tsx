@@ -1,8 +1,8 @@
+import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import FormField from "@/features/auth/components/auth-fields/form-field";
 import { magicLinkSchema } from "@/lib/schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm } from "react-hook-form";
-import { z } from "zod";
 
 type MagicLinkFormProps = {
   children: React.ReactNode;

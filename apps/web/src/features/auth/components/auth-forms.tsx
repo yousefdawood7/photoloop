@@ -1,9 +1,9 @@
 import { ViewTransition } from "react";
+import Link from "next/link";
 import FormFields from "@/features/auth/components/auth-fields/form-fields";
 import AuthHeader from "@/features/auth/components/auth-header";
 import AuthMethods from "@/features/auth/components/auth-methods/auth-methods";
 import AuthSeparator from "@/features/auth/components/auth-separator";
-import Link from "next/link";
 
 type AuthFormsProps = {
   isRegister?: boolean;
