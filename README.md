@@ -80,12 +80,12 @@ The **Next.js frontend** proxies authentication requests to the **NestJS backend
 
 | Technology                                          | Purpose                                                          |
 | --------------------------------------------------- | ---------------------------------------------------------------- |
-| **[Next.js 16](https://nextjs.org/)**               | React framework with App Router, typed routes & view transitions |
-| **[React 19](https://react.dev/)**                  | UI library                                                       |
-| **[Tailwind CSS 4](https://tailwindcss.com/)**      | Utility-first CSS framework                                      |
+| **[Next.js](https://nextjs.org/)**               | React framework with App Router, typed routes & view transitions |
+| **[React](https://react.dev/)**                  | UI library                                                       |
+| **[Tailwind V4](https://tailwindcss.com/)**      | Utility-first CSS framework                                      |
 | **[Better Auth](https://www.better-auth.com/)**     | Client-side auth (React hooks, magic link, Google One Tap, 2FA)  |
 | **[React Hook Form](https://react-hook-form.com/)** | Performant form management                                       |
-| **[Zod 4](https://zod.dev/)**                       | Schema validation & form resolver                                |
+| **[Zod](https://zod.dev/)**                       | Schema validation & form resolver                                |
 | **[@t3-oss/env-nextjs](https://env.t3.gg/)**        | Type-safe environment variables                                  |
 | **[Geist & Inter](https://vercel.com/font)**        | Typography (Google Fonts)                                        |
 
@@ -100,7 +100,7 @@ The **Next.js frontend** proxies authentication requests to the **NestJS backend
 | **[Resend](https://resend.com/)**               | Transactional email service                 |
 | **[React Email](https://react.email/)**         | Email templates built with React components |
 | **[@t3-oss/env-core](https://env.t3.gg/)**      | Type-safe environment variables             |
-| **[Zod 4](https://zod.dev/)**                   | Runtime schema validation                   |
+| **[Zod](https://zod.dev/)**                   | Runtime schema validation                   |
 
 ### Shared Packages
 
@@ -115,9 +115,9 @@ The **Next.js frontend** proxies authentication requests to the **NestJS backend
 | Tool                                                          | Purpose                                |
 | ------------------------------------------------------------- | -------------------------------------- |
 | **[Turborepo](https://turbo.build/)**                         | Monorepo build orchestration & caching |
-| **[pnpm 11](https://pnpm.io/)**                               | Fast, disk-efficient package manager   |
+| **[pnpm](https://pnpm.io/)**                               | Fast, disk-efficient package manager   |
 | **[TypeScript 6](https://www.typescriptlang.org/)**           | Type safety across the entire codebase |
-| **[ESLint 10](https://eslint.org/)**                          | Linting with shared config             |
+| **[ESLint](https://eslint.org/)**                          | Linting with shared config             |
 | **[Prettier](https://prettier.io/)**                          | Code formatting                        |
 | **[Drizzle Kit](https://orm.drizzle.team/kit-docs/overview)** | Database migration tooling             |
 | **[Jest](https://jestjs.io/)**                                | Testing framework (API)                |
@@ -352,7 +352,6 @@ pnpm drizzle-kit studio
 A shared component library consumed by both `apps/web` and `apps/api` (for email templates). Built with:
 
 - **[shadcn/ui](https://ui.shadcn.com/)** — Accessible UI primitives
-- **[Radix UI](https://www.radix-ui.com/)** — Headless component primitives
 - **[Tailwind CSS 4](https://tailwindcss.com/)** — Styling
 - **[Lucide React](https://lucide.dev/)** — Icon library
 - **[Sonner](https://sonner.emilkowal.dev/)** — Toast notifications
