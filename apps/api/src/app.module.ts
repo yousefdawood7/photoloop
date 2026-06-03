@@ -10,6 +10,7 @@ import {
   openAPI,
   twoFactor,
 } from 'better-auth/plugins';
+import { noDisposableEmails } from 'better-auth-no-disposable-emails';
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import { ResendModule, ResendService } from 'nestjs-resend';
 
@@ -39,6 +40,10 @@ import { ConfigService } from './config/config.service';
             twoFactor(),
             openAPI(),
             lastLoginMethod(),
+            noDisposableEmails({
+              errorMessage: 'We do not accept temporary email addresses.',
+              paths: ['/sign-up/email', '/sign-in/magic-link'],
+            }),
             magicLink({
               sendMagicLink: async ({ email, url, metadata }) => {
                 void resendService.send({
