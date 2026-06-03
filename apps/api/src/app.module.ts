@@ -1,3 +1,4 @@
+import { dymoEmailPlugin } from '@dymo-api/better-auth';
 import { Module } from '@nestjs/common';
 import { render } from '@react-email/render';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
@@ -20,7 +21,6 @@ import { EmailTemplate } from './common/emails/email-template';
 import { KEYS } from './common/utils/key';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
-
 @Module({
   imports: [
     ConfigModule,
@@ -39,6 +39,15 @@ import { ConfigService } from './config/config.service';
             twoFactor(),
             openAPI(),
             lastLoginMethod(),
+
+            dymoEmailPlugin({
+              dymoKey: configService.env().DYMO_KEY,
+              normalize: false,
+
+              emailRules: {
+                deny: ['FRAUD', 'INVALID', 'NO_REPLY_EMAIL'],
+              },
+            }),
 
             magicLink({
               sendMagicLink: async ({ email, url, metadata }) => {

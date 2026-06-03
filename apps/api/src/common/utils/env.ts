@@ -20,6 +20,8 @@ export const env = createEnv({
 
     FACEBOOK_CLIENT_ID: z.string().min(10).max(100),
     FACEBOOK_CLIENT_SECRET: z.string().min(32).max(128),
+
+    DYMO_KEY: z.string().min(32).max(128),
   },
 
   runtimeEnv: process.env,
