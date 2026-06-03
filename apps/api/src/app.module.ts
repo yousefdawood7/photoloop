@@ -41,7 +41,7 @@ import { ConfigService } from './config/config.service';
             lastLoginMethod(),
 
             dymoEmailPlugin({
-              dymoKey: configService.env().DYMO_KEY,
+              apiKey: configService.env().DYMO_KEY,
               normalize: false,
 
               emailRules: {
