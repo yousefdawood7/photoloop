@@ -66,8 +66,8 @@ export default function useAuthProvider({
         if (error) {
           startTransition(() => {
             setIsError(true);
-            return;
           });
+          return;
         }
         setIsError(false);
         return;

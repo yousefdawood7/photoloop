@@ -31,7 +31,6 @@
     "@t3-oss/env-core": "^0.13.11",
     "@thallesp/nestjs-better-auth": "^2.6.0",
     "better-auth": "^1.6.10",
-    "better-auth-no-disposable-emails": "^0.2.0",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
     "drizzle-seed": "^0.3.1",
