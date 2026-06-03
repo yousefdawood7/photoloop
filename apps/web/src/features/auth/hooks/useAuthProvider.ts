@@ -2,6 +2,7 @@ import { useState, useTransition } from "react";
 import { toast } from "@repo/ui/lib/sonner";
 import { AuthMethodsType } from "@/features/auth/types";
 import { authClient } from "@/lib/auth-client";
+import { INVALID_CODES } from "@/lib/constants";
 import { env } from "@/lib/env";
 
 type UseAuthProviderType = {
@@ -53,7 +54,18 @@ export default function useAuthProvider({
             name: name || "", // will be used in the email template
           },
           fetchOptions: {
-            ...fetchOptions,
+            onError(error) {
+              setIsError(true);
+
+              if (
+                error.error?.code &&
+                error.error.code === INVALID_CODES.EMAIL_IS_INVALID_OR_BLOCKED
+              ) {
+                toast.error("Please use a valid email address to continue");
+                return;
+              }
+              toast.error(`Failed to sign in with ${methodTitle}`);
+            },
 
             onSuccess() {
               setSignIn?.(true);
