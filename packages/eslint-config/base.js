@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import eslintConfigPrettier from "eslint-config-prettier";
 import turboPlugin from "eslint-plugin-turbo";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
+import unusedImportSort from "eslint-plugin-unused-imports";
 import tseslint from "typescript-eslint";
 import onlyWarn from "eslint-plugin-only-warn";
 
@@ -39,6 +40,25 @@ export const config = [
         },
       ],
       "simple-import-sort/exports": "warn",
+    },
+  },
+
+  {
+    plugins: {
+      "unused-imports": unusedImportSort,
+    },
+    rules: {
+      "no-unused-vars": "off",
+      "unused-imports/no-unused-imports": "error",
+      "unused-imports/no-unused-vars": [
+        "warn",
+        {
+          vars: "all",
+          varsIgnorePattern: "^_",
+          args: "after-used",
+          argsIgnorePattern: "^_",
+        },
+      ],
     },
   },
 

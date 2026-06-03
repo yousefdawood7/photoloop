@@ -46,6 +46,14 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  --font-inter: var(--font-inter);
+
+  /* Custom Breakpoints */
+  --breakpoint-mq-w-925: 57rem;
+  --breakpoint-mq-w-860: 54rem;
+  --breakpoint-mq-w-800: 50rem;
+  --breakpoint-mq-w-416: 26rem;
 }
 
 :root {
@@ -125,4 +133,14 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+iframe {
+  /* For Fixing Google's one tap styles issues on dark mode */
+  color-scheme: light;
+}
+
+/* To Fix Google's Unwanted Horizontal Scrollbar */
+#g_a11y_announcement {
+  inset-inline-start: -10000px !important;
 }
