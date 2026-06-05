@@ -1,20 +1,12 @@
 import React from 'react';
 
-type EmailTemplateProps = {
+interface AlreadySignedUpEmailTemplateProps {
   name?: string;
-  otp?: string;
-  magicLink?: string;
-  variant: 'otp' | 'magic-link';
-};
+}
 
-export function EmailTemplate({
+export function AlreadySignedUpEmailTemplate({
   name,
-  otp,
-  magicLink,
-  variant,
-}: EmailTemplateProps): React.JSX.Element {
-  const isOtp = variant === 'otp';
-
+}: AlreadySignedUpEmailTemplateProps): React.JSX.Element {
   return (
     <div
       style={{
@@ -82,7 +74,7 @@ export function EmailTemplate({
             color: '#FAFAFA',
           }}
         >
-          {isOtp ? 'Verify your email' : 'Sign in to Photoloop'}
+          Account already exists
         </h1>
 
         {/* Description */}
@@ -95,84 +87,39 @@ export function EmailTemplate({
             textAlign: 'center',
           }}
         >
-          {name
-            ? `Hey ${name},`
-            : isOtp
-              ? 'Welcome to Photoloop.'
-              : 'Welcome back.'}
-
+          {name ? `Hey ${name},` : 'Hey there,'}
           <br />
           <br />
-
-          {isOtp
-            ? 'Use the verification code below to continue creating your account.'
-            : 'Click the button below to securely sign in to your account.'}
+          It looks like a Photoloop account has already been created using this
+          email address.
+          <br />
+          <br />
+          If this was you, simply sign in using your existing account.
         </p>
 
-        {/* OTP */}
-        {isOtp && otp && (
-          <div
-            style={{
-              background: '#181818',
-              border: '1px solid #2A2A2A',
-              borderRadius: '20px',
-              padding: '24px',
-              textAlign: 'center',
-              marginBottom: '24px',
-              boxShadow: 'inset 0 0 0 1px #2A2A2A',
-            }}
-          >
-            <p
-              style={{
-                fontSize: '42px',
-                letterSpacing: '0.22em',
-                fontWeight: 700,
-                margin: 0,
-                color: '#FAFAFA',
-              }}
-            >
-              {otp.split('').join(' ')}
-            </p>
-          </div>
-        )}
-
-        {/* Magic Link */}
-        {!isOtp && magicLink && (
-          <div
-            style={{
-              textAlign: 'center',
-              marginBottom: '24px',
-            }}
-          >
-            <a
-              href={magicLink}
-              style={{
-                background: '#FAFAFA',
-                color: '#0A0A0A',
-                padding: '14px 28px',
-                borderRadius: '14px',
-                textDecoration: 'none',
-                fontWeight: 600,
-                fontSize: '15px',
-                display: 'inline-block',
-              }}
-            >
-              Sign in to Photoloop
-            </a>
-          </div>
-        )}
-
-        {/* Expiration */}
-        <p
+        {/* Info Box */}
+        <div
           style={{
-            color: '#71717A',
-            fontSize: '14px',
-            marginBottom: '28px',
+            background: '#181818',
+            border: '1px solid #2A2A2A',
+            borderRadius: '20px',
+            padding: '24px',
             textAlign: 'center',
+            marginBottom: '24px',
+            boxShadow: 'inset 0 0 0 1px #2A2A2A',
           }}
         >
-          This {isOtp ? 'code' : 'magic link'} expires in 10 minutes.
-        </p>
+          <p
+            style={{
+              margin: 0,
+              color: '#D4D4D8',
+              fontSize: '15px',
+              lineHeight: 1.7,
+            }}
+          >
+            No further action is required.
+          </p>
+        </div>
 
         {/* Divider */}
         <div
@@ -193,7 +140,7 @@ export function EmailTemplate({
             textAlign: 'center',
           }}
         >
-          If you didn’t create a Photoloop account, you can safely ignore this
+          If you didn't attempt to create an account, you can safely ignore this
           email.
         </p>
       </div>

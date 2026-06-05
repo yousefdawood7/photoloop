@@ -17,6 +17,7 @@ import { ResendModule, ResendService } from 'nestjs-resend';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { schema } from './common/db/schemas';
+import { AlreadySignedUpEmailTemplate } from './common/emails/already-signup';
 import { EmailTemplate } from './common/emails/email-template';
 import { KEYS } from './common/utils/key';
 import { ConfigModule } from './config/config.module';
@@ -91,6 +92,20 @@ import { ConfigService } from './config/config.service';
             requireEmailVerification: true,
             minPasswordLength: 8,
             maxPasswordLength: 128,
+
+            onExistingUserSignUp: async ({ user }) => {
+              void resendService.send({
+                from: 'Photoloop <hello@yousefdawood.me>',
+                to: user.email,
+                subject: 'Welcome to Photoloop',
+
+                html: await render(
+                  AlreadySignedUpEmailTemplate({
+                    name: user.name,
+                  }),
+                ),
+              });
+            },
           },
           emailVerification: {
             sendVerificationEmail: async ({ user }) => {
