@@ -5,6 +5,7 @@ import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import {
+  emailOTP,
   lastLoginMethod,
   magicLink,
   oneTap,
@@ -41,6 +42,27 @@ import { ConfigService } from './config/config.service';
             openAPI(),
             lastLoginMethod(),
 
+            emailOTP({
+              sendVerificationOnSignUp: true,
+              allowedAttempts: 5,
+              expiresIn: 300,
+              sendVerificationOTP: async ({ email, otp, type }) => {
+                if (type === 'email-verification')
+                  void resendService.send({
+                    from: 'Photoloop <hello@yousefdawood.me>',
+                    to: email,
+                    subject: 'Verify your email for Photoloop',
+
+                    html: await render(
+                      EmailTemplate({
+                        otp,
+                        variant: 'otp',
+                      }),
+                    ),
+                  });
+              },
+            }),
+
             dymoEmailPlugin({
               apiKey: configService.env().DYMO_KEY,
               normalize: false,
@@ -49,7 +71,6 @@ import { ConfigService } from './config/config.service';
                 deny: ['FRAUD', 'INVALID', 'NO_REPLY_EMAIL'],
               },
             }),
-
             magicLink({
               sendMagicLink: async ({ email, url, metadata }) => {
                 void resendService.send({
