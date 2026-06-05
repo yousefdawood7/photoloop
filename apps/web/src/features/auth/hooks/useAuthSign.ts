@@ -1,4 +1,5 @@
 import { useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "@repo/ui/lib/sonner";
 import { z } from "zod";
 import { authClient } from "@/lib/auth-client";
@@ -10,6 +11,7 @@ type UseAuthSignType = {
 
 export default function useAuthSign({ isRegister }: UseAuthSignType) {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   function handleSubmit(
     data: z.infer<
@@ -24,9 +26,12 @@ export default function useAuthSign({ isRegister }: UseAuthSignType) {
           name: data.name!,
           email: data.email,
           password: data.password,
-          callbackURL: `http://localhost:3000/`,
+          // calbackURL: `${env.NEXT_PUBLIC_APP_URL}/auth/verify-email`,
+
           fetchOptions: {
             onSuccess() {
+              router.push("/verify-email");
+              sessionStorage.setItem("signedInUserEmail", data.email);
               toast.success("Email verification sent. Please check your inbox");
             },
 
@@ -40,7 +45,7 @@ export default function useAuthSign({ isRegister }: UseAuthSignType) {
       await authClient.signIn.email({
         email: data.email,
         password: data.password,
-        callbackURL: `http://localhost:3000/`,
+        //  callbackURL: `${env.NEXT_PUBLIC_APP_URL}/`,
         fetchOptions: {
           onSuccess() {
             toast.success("Signed in successfully");
