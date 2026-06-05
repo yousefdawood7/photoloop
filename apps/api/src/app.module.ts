@@ -129,23 +129,8 @@ import { ConfigService } from './config/config.service';
             },
           },
           emailVerification: {
-            sendVerificationEmail: async ({ user }) => {
-              void resendService.send({
-                from: 'Photoloop <hello@yousefdawood.me>',
-                to: user.email,
-                subject: 'Verify your email for Photoloop',
-
-                html: await render(
-                  EmailTemplate({
-                    name: user.name,
-                    otp: '123456',
-                    variant: 'otp',
-                  }),
-                ),
-              });
-            },
             sendOnSignUp: true,
-            sendOnSignIn: true,
+            // sendOnSignIn: true,
             autoSignInAfterVerification: true,
           },
         }),
