@@ -1,4 +1,5 @@
 import {
+  emailOTPClient,
   lastLoginMethodClient,
   magicLinkClient,
   oneTapClient,
@@ -14,6 +15,7 @@ export const authClient = createAuthClient({
     twoFactorClient(),
     magicLinkClient(),
     lastLoginMethodClient(),
+    emailOTPClient(),
     oneTapClient({
       clientId: env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
 
