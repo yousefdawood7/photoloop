@@ -129,7 +129,7 @@ import { ConfigService } from './config/config.service';
             },
           },
           emailVerification: {
-            sendOnSignUp: true,
+            // sendOnSignUp: true,
             // sendOnSignIn: true,
             autoSignInAfterVerification: true,
           },
