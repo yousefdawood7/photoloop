@@ -42,22 +42,19 @@ export default function AuthButton({
 
   if (methodName === "magic-link")
     return (
-      <>
-        {console.log("RENDERING MAGIC LINK")}
-        <MagicLinkField
-          button={
-            <div className={`relative ${className}`}>
-              {lastMethod === methodName && hasMounted && (
-                <LastLoginBadge className="absolute top-0 right-0 -translate-y-1/2 " />
-              )}
-              <Button {...buttonProps} className="w-full py-5">
-                {isPending ? <Spinner /> : authLogo}
-                <span>Sign in with {methodTitle}</span>
-              </Button>
-            </div>
-          }
-        />
-      </>
+      <MagicLinkField
+        button={
+          <div className={`relative ${className}`}>
+            {lastMethod === methodName && hasMounted && (
+              <LastLoginBadge className="absolute top-0 right-0 -translate-y-1/2 " />
+            )}
+            <Button {...buttonProps} className="w-full py-5">
+              {isPending ? <Spinner /> : authLogo}
+              <span>Sign in with {methodTitle}</span>
+            </Button>
+          </div>
+        }
+      />
     );
 
   return (

@@ -3,10 +3,11 @@
 import { FormProvider, useForm } from "react-hook-form";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@repo/ui/components/button";
 import { Field, FieldGroup } from "@repo/ui/components/ui/field";
 import { z } from "zod";
+import AuthButton from "@/features/auth/components/auth-button";
 import FormField from "@/features/auth/components/auth-fields/form-field";
+import useAuthSign from "@/features/auth/hooks/useAuthSign";
 import { loginSchema, registerSchema } from "@/lib/schemas";
 
 type FormFieldsProps = {
@@ -14,14 +15,11 @@ type FormFieldsProps = {
 };
 
 export default function FormFields({ isRegister = false }: FormFieldsProps) {
-  const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(isRegister ? registerSchema : loginSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
+  const authSchema = isRegister ? registerSchema : loginSchema;
+  const { handleSubmit, isPending } = useAuthSign({ isRegister });
+
+  const form = useForm<z.infer<typeof authSchema>>({
+    resolver: zodResolver(authSchema),
   });
 
   const confirmPasswordFields = (
@@ -41,25 +39,30 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
     </div>
   );
 
-  function onSubmit(data: z.infer<typeof registerSchema>) {
+  function onSubmit(data: z.infer<typeof authSchema>) {
     console.log(data);
+    handleSubmit(data);
   }
 
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <FieldGroup className="gap-3">
-          <FormField
-            name="name"
-            label="Full Name"
-            type="text"
-            placeholder="Enter your name"
-          />
+          {isRegister && (
+            <FormField
+              name="name"
+              label="Full Name"
+              type="text"
+              placeholder="Enter your name"
+              disabled={isPending}
+            />
+          )}
           <FormField
             name="email"
             label="Email"
             type="email"
             placeholder="Enter your email"
+            disabled={isPending}
           />
 
           {isRegister ? (
@@ -70,11 +73,16 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
               label="Password"
               type="password"
               placeholder="Enter your password"
+              disabled={isPending}
             />
           )}
 
           <Field>
-            {isRegister ? <Button>Sign up</Button> : <Button>Sign in</Button>}
+            {isRegister ? (
+              <AuthButton disabled={isPending}>Sign up</AuthButton>
+            ) : (
+              <AuthButton disabled={isPending}>Sign in</AuthButton>
+            )}
           </Field>
 
           <footer className="flex justify-between items-center flex-col mq-w-925:flex-row">
@@ -88,7 +96,7 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
             ) : (
               <p>
                 <span className="text-muted-foreground">
-                  Don't have an account?
+                  Don&apos;t have an account?
                 </span>{" "}
                 <Link href="/register">Sign up</Link>
               </p>
