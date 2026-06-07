@@ -4,6 +4,7 @@ import { AuthMethodsType } from "@/features/auth/types";
 import { authClient } from "@/lib/auth-client";
 import { INVALID_CODES } from "@/lib/constants";
 import { env } from "@/lib/env";
+import { customAuthError } from "@/utils/custom-auth-error";
 
 type UseAuthProviderType = {
   methodName: AuthMethodsType;
@@ -37,12 +38,61 @@ export default function useAuthProvider({
   };
 
   function handleSignin(name?: string, email?: string) {
-    if (!email && methodName === "magic-link") {
-      toast.error("Email is required for magic link sign in");
+    if (
+      !email &&
+      (methodName === "magic-link" || methodName === "forget-password")
+    ) {
+      toast.error(
+        `Email is required for ${methodName.split("-").join(" ")} sign in`,
+      );
       return;
     }
 
     startTransition(async () => {
+      if (methodName === "forget-password") {
+        const { error } = await authClient.requestPasswordReset({
+          email: email!,
+          redirectTo: `${env.NEXT_PUBLIC_APP_URL}/forget-password`,
+
+          fetchOptions: {
+            onSuccess() {
+              setSignIn?.(true);
+              setIsError(false);
+              toast.success(
+                `A verification email has been sent to your ${email} address. Please check your inbox.`,
+              );
+            },
+
+            onError(error) {
+              setIsError(true);
+
+              const isErrorIssued = customAuthError({
+                error,
+                errorCode: INVALID_CODES.EMAIL_IS_INVALID_OR_BLOCKED,
+                toastMsg: "Please use a valid email address to continue",
+              });
+
+              // prettier-ignore
+              if (isErrorIssued)
+                return;
+
+              toast.error(
+                "Failed to send the verification email. Please try again later",
+              );
+            },
+          },
+        });
+
+        if (error) {
+          startTransition(() => {
+            setIsError(true);
+          });
+          return;
+        }
+        setIsError(false);
+        return;
+      }
+
       if (methodName === "magic-link") {
         const { error } = await authClient.signIn.magicLink({
           // will only be used during the sign up process, if the user is signing in for the first time (won't be passed to email template)
@@ -57,13 +107,16 @@ export default function useAuthProvider({
             onError(error) {
               setIsError(true);
 
-              if (
-                error.error?.code &&
-                error.error.code === INVALID_CODES.EMAIL_IS_INVALID_OR_BLOCKED
-              ) {
-                toast.error("Please use a valid email address to continue");
+              const isErrorIssued = customAuthError({
+                error,
+                errorCode: INVALID_CODES.EMAIL_IS_INVALID_OR_BLOCKED,
+                toastMsg: "Please use a valid email address to continue",
+              });
+
+              // prettier-ignore
+              if (isErrorIssued)
                 return;
-              }
+
               toast.error(`Failed to sign in with ${methodTitle}`);
             },
 
