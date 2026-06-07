@@ -7,6 +7,7 @@ import { Field, FieldGroup } from "@repo/ui/components/ui/field";
 import { z } from "zod";
 import AuthButton from "@/features/auth/components/auth-button";
 import FormField from "@/features/auth/components/auth-fields/form-field";
+import ForgetPassword from "@/features/auth/components/auth-methods/forget-password";
 import useAuthSign from "@/features/auth/hooks/useAuthSign";
 import { loginSchema, registerSchema } from "@/lib/schemas";
 
@@ -101,7 +102,7 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
                 <Link href="/register">Sign up</Link>
               </p>
             )}
-            <p>Forgot password?</p>
+            <ForgetPassword />
           </footer>
         </FieldGroup>
       </form>
