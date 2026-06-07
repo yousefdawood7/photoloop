@@ -9,9 +9,10 @@ type AuthButtonProps = {
 export default function AuthButton({
   children,
   disabled = false,
-}: AuthButtonProps) {
+  onClick,
+}: AuthButtonProps & React.ComponentProps<"button">) {
   return (
-    <Button disabled={disabled} type="submit">
+    <Button disabled={disabled} type="submit" onClick={onClick}>
       {disabled && <Spinner />}
       {children}
     </Button>

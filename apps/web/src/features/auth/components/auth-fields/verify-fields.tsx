@@ -1,6 +1,7 @@
 "use client";
 
-import { Button } from "@repo/ui/components/button";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -10,11 +11,46 @@ import {
   CardTitle,
 } from "@repo/ui/components/card";
 import { Field } from "@repo/ui/components/field";
+import { toast } from "@repo/ui/lib/sonner";
+import AuthButton from "@/features/auth/components/auth-button";
 import OtpField from "@/features/auth/components/auth-fields/otp-field";
 import useHasMounted from "@/hooks/useHasMounted";
+import { authClient } from "@/lib/auth-client";
+import { INVALID_CODES } from "@/lib/constants";
 
 export default function VerifyFields() {
   const hasMounted = useHasMounted();
+  const [isPending, startTransition] = useTransition();
+  const [value, setValue] = useState("");
+  const router = useRouter();
+
+  function handleOtpVerfication(otp: string) {
+    startTransition(async () => {
+      await authClient.emailOtp.verifyEmail({
+        email: signedInUserEmail,
+        otp,
+
+        fetchOptions: {
+          onSuccess() {
+            toast.success("Email verified successfully");
+            sessionStorage.removeItem("signedInUserEmail");
+            router.replace("/");
+          },
+
+          onError(error) {
+            if (
+              error.error.code &&
+              error.error.code === INVALID_CODES.TOO_MANY_ATTEMPTS
+            ) {
+              toast.error("Too many attempts. Please try again later");
+              return;
+            }
+            toast.error("Invalid verification code. Please try again.");
+          },
+        },
+      });
+    });
+  }
 
   if (!hasMounted) {
     return null;
@@ -48,13 +84,16 @@ export default function VerifyFields() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <OtpField />
+        <OtpField value={value} setValue={setValue} isPending={isPending} />
       </CardContent>
       <CardFooter>
         <Field>
-          <Button type="submit" className="w-full">
+          <AuthButton
+            disabled={isPending}
+            onClick={() => handleOtpVerfication(value)}
+          >
             Verify
-          </Button>
+          </AuthButton>
         </Field>
       </CardFooter>
     </Card>

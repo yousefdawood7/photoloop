@@ -1,4 +1,3 @@
-import { useTransition } from "react";
 import { Field } from "@repo/ui/components/field";
 import {
   InputOTP,
@@ -6,30 +5,28 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@repo/ui/components/input-otp";
-import { authClient } from "@/lib/auth-client";
 
-export default function OtpField() {
-  const [isPending, startTransition] = useTransition();
+type OtpFieldProps = {
+  value: string;
+  setValue: (value: string) => void;
+  isPending: boolean;
+};
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    startTransition(async () => {
-      await authClient.emailOtp.verifyEmail({
-        email: "user@example.com", // required
-        otp: "123456", // required
-      });
-    });
-  }
-
+export default function OtpField({
+  value,
+  setValue,
+  isPending,
+}: OtpFieldProps) {
   return (
-    <Field onSubmit={handleSubmit}>
+    <Field>
       <InputOTP
         maxLength={6}
         id="otp-verification"
         required
         containerClassName="justify-center"
         disabled={isPending}
-        onSubmit={handleSubmit}
+        value={value}
+        onChange={(value) => setValue(value)}
       >
         <InputOTPGroup
           className="*:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:w-11 *:data-[slot=input-otp-slot]:text-xl"
