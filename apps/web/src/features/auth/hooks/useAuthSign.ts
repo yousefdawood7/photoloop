@@ -22,7 +22,6 @@ export default function useAuthSign({ isRegister }: UseAuthSignType) {
           name: data.name!,
           email: data.email,
           password: data.password,
-          // calbackURL: `${env.NEXT_PUBLIC_APP_URL}/auth/verify-email`,
 
           fetchOptions: {
             onSuccess() {
@@ -41,7 +40,7 @@ export default function useAuthSign({ isRegister }: UseAuthSignType) {
       await authClient.signIn.email({
         email: data.email,
         password: data.password,
-        //  callbackURL: `${env.NEXT_PUBLIC_APP_URL}/`,
+
         fetchOptions: {
           onSuccess() {
             router.replace("/");
