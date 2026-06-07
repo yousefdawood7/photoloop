@@ -62,3 +62,7 @@ export const forgetPasswordSchema = z
     error: "Password don't match",
     path: ["confirmPassword"],
   });
+
+export const forgetPasswordEmailSchema = z.object({
+  email: emailSchema,
+});
