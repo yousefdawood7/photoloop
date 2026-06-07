@@ -4,6 +4,7 @@ type EmailTemplateProps = {
   name?: string;
   otp?: string;
   magicLink?: string;
+  expiredTime?: number;
   variant: 'otp' | 'magic-link';
 };
 
@@ -12,6 +13,7 @@ export function EmailTemplate({
   otp,
   magicLink,
   variant,
+  expiredTime = 5,
 }: EmailTemplateProps): React.JSX.Element {
   const isOtp = variant === 'otp';
 
@@ -125,13 +127,14 @@ export function EmailTemplate({
             <p
               style={{
                 fontSize: '42px',
-                letterSpacing: '0.22em',
                 fontWeight: 700,
                 margin: 0,
                 color: '#FAFAFA',
+                letterSpacing: '8px',
+                textIndent: '8px',
               }}
             >
-              {otp.split('').join(' ')}
+              {otp}
             </p>
           </div>
         )}
@@ -171,7 +174,7 @@ export function EmailTemplate({
             textAlign: 'center',
           }}
         >
-          This {isOtp ? 'code' : 'magic link'} expires in 10 minutes.
+          This {isOtp ? 'code' : 'magic link'} expires in {expiredTime} minutes.
         </p>
 
         {/* Divider */}
