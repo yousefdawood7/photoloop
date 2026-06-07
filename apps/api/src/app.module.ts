@@ -18,7 +18,6 @@ import { ResendModule, ResendService } from 'nestjs-resend';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { schema } from './common/db/schemas';
-import { AlreadySignedUpEmailTemplate } from './common/emails/already-signup';
 import { EmailTemplate } from './common/emails/email-template';
 import { KEYS } from './common/utils/key';
 import { ConfigModule } from './config/config.module';
@@ -46,6 +45,7 @@ import { ConfigService } from './config/config.service';
               sendVerificationOnSignUp: true,
               allowedAttempts: 5,
               expiresIn: 300,
+
               sendVerificationOTP: async ({ email, otp, type }) => {
                 if (type === 'email-verification')
                   void resendService.send({
@@ -57,12 +57,14 @@ import { ConfigService } from './config/config.service';
                       EmailTemplate({
                         otp,
                         variant: 'otp',
+                        expiredTime: 5,
                       }),
                     ),
                   });
               },
             }),
 
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             dymoEmailPlugin({
               apiKey: configService.env().DYMO_KEY,
               normalize: false,
@@ -72,6 +74,8 @@ import { ConfigService } from './config/config.service';
               },
             }),
             magicLink({
+              expiresIn: 300,
+
               sendMagicLink: async ({ email, url, metadata }) => {
                 void resendService.send({
                   from: 'Photoloop <hello@yousefdawood.me>',
@@ -83,6 +87,7 @@ import { ConfigService } from './config/config.service';
                       name: (metadata?.name || '') as string,
                       magicLink: url,
                       variant: 'magic-link',
+                      expiredTime: 5,
                     }),
                   ),
                 });
@@ -114,11 +119,13 @@ import { ConfigService } from './config/config.service';
             minPasswordLength: 8,
             maxPasswordLength: 128,
 
-            onExistingUserSignUp: async ({ user }) => {
+            /* 
+             TODO we're going to implement it later
+              onExistingUserSignUp: async ({ user }) => {
               void resendService.send({
                 from: 'Photoloop <hello@yousefdawood.me>',
                 to: user.email,
-                subject: 'Welcome to Photoloop',
+                subject: 'You have already signed up for Photoloop',
 
                 html: await render(
                   AlreadySignedUpEmailTemplate({
@@ -126,12 +133,8 @@ import { ConfigService } from './config/config.service';
                   }),
                 ),
               });
-            },
-          },
-          emailVerification: {
-            // sendOnSignUp: true,
-            // sendOnSignIn: true,
-            autoSignInAfterVerification: true,
+              },
+            */
           },
         }),
       }),
