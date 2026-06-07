@@ -48,6 +48,7 @@ export default function useAuthSign({ isRegister }: UseAuthSignType) {
         //  callbackURL: `${env.NEXT_PUBLIC_APP_URL}/`,
         fetchOptions: {
           onSuccess() {
+            router.replace("/");
             toast.success("Signed in successfully");
           },
           onError() {
