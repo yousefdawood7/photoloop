@@ -42,7 +42,7 @@ export default function MagicLinkForm({
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className={className}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className={className || ""}>
         {children}
         <DialogFooter className="sm:justify-start">
           {/* !isError is Just to ensure that magic link send successfully we shouldn't send it again */}

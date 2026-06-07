@@ -16,7 +16,7 @@ export default function ForgetPassword() {
         <p className="cursor-pointer">Forget password</p>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
-        <ForgetPasswordEmailForm>
+        <ForgetPasswordEmailForm className="space-y-2">
           <DialogHeader>
             <DialogTitle>Reset your password</DialogTitle>
             <DialogDescription>
@@ -25,7 +25,6 @@ export default function ForgetPassword() {
               password.
             </DialogDescription>
           </DialogHeader>
-
           <FormField
             name="email"
             label="Email"
