@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@repo/ui/components/card";
 import { Field } from "@repo/ui/components/field";
+import { LucideMailQuestionMark } from "@repo/ui/components/icons";
 import Placeholder from "@repo/ui/components/placeholder";
 import { toast } from "@repo/ui/lib/sonner";
 import AuthButton from "@/features/auth/components/auth-button";
@@ -64,6 +65,7 @@ export default function VerifyFields() {
       <Placeholder
         title="No email found"
         description="We couldn't find an email address to send the verification code to. Please go back and enter your email address"
+        icon={LucideMailQuestionMark}
       />
     );
   }

@@ -1,1 +1,6 @@
-export { LucideMail, LucideEye, LucideEyeOff } from "lucide-react";
+export {
+  LucideMail,
+  LucideEye,
+  LucideEyeOff,
+  LucideMailQuestionMark,
+} from "lucide-react";
