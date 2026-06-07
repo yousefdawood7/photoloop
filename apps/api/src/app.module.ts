@@ -19,6 +19,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { schema } from './common/db/schemas';
 import { EmailTemplate } from './common/emails/email-template';
+import { ResetPassswordEmail } from './common/emails/reset-password';
 import { KEYS } from './common/utils/key';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config/config.service';
@@ -118,6 +119,21 @@ import { ConfigService } from './config/config.service';
             requireEmailVerification: true,
             minPasswordLength: 8,
             maxPasswordLength: 128,
+
+            sendResetPassword: async ({ user, url }) => {
+              void resendService.send({
+                from: 'Photoloop <hello@yousefdawood.me>',
+                to: user.email,
+                subject: 'Your magic link for Photoloop',
+
+                html: await render(
+                  ResetPassswordEmail({
+                    name: user.name,
+                    resetUrl: url,
+                  }),
+                ),
+              });
+            },
 
             /* 
              TODO we're going to implement it later
