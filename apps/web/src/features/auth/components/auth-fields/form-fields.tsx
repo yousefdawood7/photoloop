@@ -85,27 +85,27 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
               <AuthButton disabled={isPending}>Sign in</AuthButton>
             )}
           </Field>
-
-          <footer className="flex justify-between items-center flex-col mq-w-925:flex-row">
-            {isRegister ? (
-              <p>
-                <span className="text-muted-foreground">
-                  Already have an account?
-                </span>{" "}
-                <Link href="/login">Sign in</Link>
-              </p>
-            ) : (
-              <p>
-                <span className="text-muted-foreground">
-                  Don&apos;t have an account?
-                </span>{" "}
-                <Link href="/register">Sign up</Link>
-              </p>
-            )}
-            {!isRegister && <ForgetPassword />}
-          </footer>
         </FieldGroup>
       </form>
+
+      <footer className="flex justify-between items-center flex-col mq-w-925:flex-row">
+        {isRegister ? (
+          <p>
+            <span className="text-muted-foreground">
+              Already have an account?
+            </span>{" "}
+            <Link href="/login">Sign in</Link>
+          </p>
+        ) : (
+          <p>
+            <span className="text-muted-foreground">
+              Don&apos;t have an account?
+            </span>{" "}
+            <Link href="/register">Sign up</Link>
+          </p>
+        )}
+        {!isRegister && <ForgetPassword />}
+      </footer>
     </FormProvider>
   );
 }
