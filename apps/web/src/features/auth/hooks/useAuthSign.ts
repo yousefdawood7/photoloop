@@ -14,11 +14,7 @@ export default function useAuthSign({ isRegister }: UseAuthSignType) {
   const router = useRouter();
 
   function handleSubmit(
-    data: z.infer<
-      typeof isRegister extends true
-        ? typeof registerSchema
-        : typeof loginSchema
-    >,
+    data: z.infer<typeof registerSchema> | z.infer<typeof loginSchema>,
   ) {
     startTransition(async () => {
       if (isRegister) {
