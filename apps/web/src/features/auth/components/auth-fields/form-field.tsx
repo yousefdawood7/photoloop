@@ -13,6 +13,8 @@ type FormFieldProps = {
   name: string;
   placeholder?: string;
   isSingleField?: boolean;
+  defaultValue?: string;
+  disabled?: boolean;
 };
 
 export default function FormField({
@@ -21,18 +23,23 @@ export default function FormField({
   name,
   placeholder,
   isSingleField = false,
+  defaultValue = "",
+  disabled = false,
 }: FormFieldProps) {
   const id = useId();
   const [isPasswordShown, setIsPasswordShown] = useState<boolean>(false);
+  const { control } = useFormContext();
+
   function handlePasswordToggle() {
     setIsPasswordShown(!isPasswordShown);
   }
-  const { control } = useFormContext();
 
   return (
     <Controller
       name={name}
       control={control}
+      disabled={disabled}
+      defaultValue={defaultValue}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid}>
           <FieldLabel htmlFor={id}>{label}</FieldLabel>

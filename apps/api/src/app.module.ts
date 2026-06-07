@@ -5,6 +5,7 @@ import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import {
+  emailOTP,
   lastLoginMethod,
   magicLink,
   oneTap,
@@ -40,6 +41,30 @@ import { ConfigService } from './config/config.service';
             openAPI(),
             lastLoginMethod(),
 
+            emailOTP({
+              sendVerificationOnSignUp: true,
+              allowedAttempts: 5,
+              expiresIn: 300,
+
+              sendVerificationOTP: async ({ email, otp, type }) => {
+                if (type === 'email-verification')
+                  void resendService.send({
+                    from: 'Photoloop <hello@yousefdawood.me>',
+                    to: email,
+                    subject: 'Verify your email for Photoloop',
+
+                    html: await render(
+                      EmailTemplate({
+                        otp,
+                        variant: 'otp',
+                        expiredTime: 5,
+                      }),
+                    ),
+                  });
+              },
+            }),
+
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             dymoEmailPlugin({
               apiKey: configService.env().DYMO_KEY,
               normalize: false,
@@ -48,8 +73,9 @@ import { ConfigService } from './config/config.service';
                 deny: ['FRAUD', 'INVALID', 'NO_REPLY_EMAIL'],
               },
             }),
-
             magicLink({
+              expiresIn: 300,
+
               sendMagicLink: async ({ email, url, metadata }) => {
                 void resendService.send({
                   from: 'Photoloop <hello@yousefdawood.me>',
@@ -61,6 +87,7 @@ import { ConfigService } from './config/config.service';
                       name: (metadata?.name || '') as string,
                       magicLink: url,
                       variant: 'magic-link',
+                      expiredTime: 5,
                     }),
                   ),
                 });
@@ -91,26 +118,23 @@ import { ConfigService } from './config/config.service';
             requireEmailVerification: true,
             minPasswordLength: 8,
             maxPasswordLength: 128,
-          },
-          emailVerification: {
-            sendVerificationEmail: async ({ user }) => {
+
+            /* 
+             TODO we're going to implement it later
+              onExistingUserSignUp: async ({ user }) => {
               void resendService.send({
                 from: 'Photoloop <hello@yousefdawood.me>',
                 to: user.email,
-                subject: 'Verify your email for Photoloop',
+                subject: 'You have already signed up for Photoloop',
 
                 html: await render(
-                  EmailTemplate({
+                  AlreadySignedUpEmailTemplate({
                     name: user.name,
-                    otp: '123456',
-                    variant: 'otp',
                   }),
                 ),
               });
-            },
-            sendOnSignUp: true,
-            sendOnSignIn: true,
-            autoSignInAfterVerification: true,
+              },
+            */
           },
         }),
       }),

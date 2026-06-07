@@ -13,11 +13,10 @@ export class AppController {
   @Post()
   @AllowAnonymous() // Allow anonymous access
   async sendEmail() {
-    const x = await this.authService.api.sendVerificationEmail({
+    await this.authService.api.sendVerificationEmail({
       body: { email: 'yousefdawood31@gmail.com' },
     });
 
-    console.log(x);
     return { message: 'Verification email sent' };
   }
 }
