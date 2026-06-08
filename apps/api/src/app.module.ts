@@ -120,6 +120,7 @@ import { ConfigService } from './config/config.service';
             minPasswordLength: 8,
             maxPasswordLength: 128,
             resetPasswordTokenExpiresIn: 300,
+            revokeSessionsOnPasswordReset: true,
 
             sendResetPassword: async ({ user, url }) => {
               void resendService.send({
