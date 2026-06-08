@@ -3,4 +3,5 @@ export {
   LucideEye,
   LucideEyeOff,
   LucideMailQuestionMark,
+  LucideKeyRound,
 } from "lucide-react";
