@@ -119,6 +119,7 @@ import { ConfigService } from './config/config.service';
             requireEmailVerification: true,
             minPasswordLength: 8,
             maxPasswordLength: 128,
+            resetPasswordTokenExpiresIn: 300,
 
             sendResetPassword: async ({ user, url }) => {
               void resendService.send({
@@ -130,6 +131,7 @@ import { ConfigService } from './config/config.service';
                   ResetPassswordEmail({
                     name: user.name,
                     resetUrl: url,
+                    expiredTime: 5,
                   }),
                 ),
               });

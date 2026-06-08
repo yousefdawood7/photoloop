@@ -3,11 +3,13 @@ import React from 'react';
 interface ResetPasswordProps {
   name?: string;
   resetUrl: string;
+  expiredTime: number;
 }
 
 export function ResetPassswordEmail({
   name,
   resetUrl,
+  expiredTime = 5,
 }: ResetPasswordProps): React.JSX.Element {
   return (
     <div
@@ -134,7 +136,7 @@ export function ResetPassswordEmail({
             textAlign: 'center',
           }}
         >
-          This reset link expires in 10 minutes.
+          This reset link expires in {expiredTime} minutes.
         </p>
 
         {/* Divider */}
