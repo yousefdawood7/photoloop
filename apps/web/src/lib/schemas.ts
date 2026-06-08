@@ -1,16 +1,11 @@
 import { z } from "zod";
 
-const authSchema = z.object({
-  name: z
-    .string({ error: "Name is required" })
-    .min(1, { error: "Name is required" }) // for handling empty string case
-    .min(3, { error: "Name should be at least 3 characters" }),
+export const emailSchema = z
+  .string({ error: "Email is required" })
+  .min(1, { error: "Email is required" }) // for handling empty string case
+  .pipe(z.email({ error: "Invalid email format" }));
 
-  email: z
-    .string({ error: "Email is required" })
-    .min(1, { error: "Email is required" }) // for handling empty string case
-    .pipe(z.email({ error: "Invalid email format" })),
-
+export const passwordSchema = z.object({
   password: z.coerce
     .string<string>({ error: "Password is required" })
     .min(8, { error: "Password must be at least 8 characters long" }),
@@ -18,6 +13,18 @@ const authSchema = z.object({
   confirmPassword: z.coerce
     .string<string>({ error: "Please confirm your password" })
     .min(1, { error: "Please confirm your password" }),
+});
+
+const authSchema = z.object({
+  name: z
+    .string({ error: "Name is required" })
+    .min(1, { error: "Name is required" }) // for handling empty string case
+    .min(3, { error: "Name should be at least 3 characters" }),
+
+  email: emailSchema,
+
+  password: passwordSchema.shape.password,
+  confirmPassword: passwordSchema.shape.confirmPassword,
 });
 
 export const loginSchema = authSchema.partial({
@@ -30,10 +37,7 @@ export const magicLinkSchema = z.object({
     .string({ error: "Name is required" })
     .min(3, { error: "Name should be at least 3 characters" }),
 
-  email: z
-    .string({ error: "Email is required" })
-    .min(1, { error: "Email is required" }) // for handling empty string case
-    .pipe(z.email({ error: "Invalid email format" })),
+  email: emailSchema,
 });
 
 export const registerSchema = authSchema.refine(
@@ -43,3 +47,22 @@ export const registerSchema = authSchema.refine(
     path: ["confirmPassword"],
   },
 );
+
+export const forgetPasswordSchema = z
+  .object({
+    password: z.coerce
+      .string<string>({ error: "Password is required" })
+      .min(8, { error: "Password must be at least 8 characters long" }),
+
+    confirmPassword: z.coerce
+      .string<string>({ error: "Please confirm your password" })
+      .min(1, { error: "Please confirm your password" }),
+  })
+  .refine((val) => val.password === val.confirmPassword, {
+    error: "Password don't match",
+    path: ["confirmPassword"],
+  });
+
+export const forgetPasswordEmailSchema = z.object({
+  email: emailSchema,
+});

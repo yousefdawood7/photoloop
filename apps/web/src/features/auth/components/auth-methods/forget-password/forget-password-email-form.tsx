@@ -1,43 +1,33 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { usePathname } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@repo/ui/components/button";
 import { DialogFooter } from "@repo/ui/components/dialog";
 import { Spinner } from "@repo/ui/components/spinner";
-import { z } from "zod";
+import { z } from "better-auth";
 import useAuthProvider from "@/features/auth/hooks/useAuthProvider";
-import { magicLinkSchema } from "@/lib/schemas";
+import { forgetPasswordEmailSchema } from "@/lib/schemas";
 
-type MagicLinkFormProps = {
+type ForgetPasswordEmailFormProps = {
   children: React.ReactNode;
-  className?: string;
+  className: string;
 };
 
-export default function MagicLinkForm({
+export default function ForgetPasswordEmailForm({
   children,
   className,
-}: MagicLinkFormProps) {
-  const pathname = usePathname();
+}: ForgetPasswordEmailFormProps) {
   const { isPending, isError, handleSignin } = useAuthProvider({
-    methodName: "magic-link",
-    methodTitle: "Magic Link",
+    methodName: "forget-password",
+    methodTitle: "Forget Password",
   });
 
-  const formMagicLinkSchema =
-    pathname === "/register"
-      ? magicLinkSchema
-      : magicLinkSchema.partial({ name: true });
-
-  const { ...form } = useForm<z.infer<typeof formMagicLinkSchema>>({
-    resolver: zodResolver(formMagicLinkSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-    },
+  const { ...form } = useForm<z.infer<typeof forgetPasswordEmailSchema>>({
+    resolver: zodResolver(forgetPasswordEmailSchema),
+    defaultValues: { email: "" },
   });
 
-  function onSubmit(data: z.infer<typeof formMagicLinkSchema>) {
-    handleSignin(data.name, data.email);
+  function onSubmit(data: z.infer<typeof forgetPasswordEmailSchema>) {
+    handleSignin(undefined, data.email);
   }
 
   return (
@@ -45,15 +35,16 @@ export default function MagicLinkForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className={className || ""}>
         {children}
         <DialogFooter className="sm:justify-start">
-          {/* !isError is Just to ensure that magic link send successfully we shouldn't send it again */}
+          {/* !isError is Just to ensure that forget password link send successfully we shouldn't send it again */}
+
           <Button type="submit" disabled={isPending || isError === false}>
             {isPending ? (
               <>
                 <Spinner />
-                <span>Signing in...</span>
+                <span>Sending Reset Link</span>
               </>
             ) : (
-              <span>Sign in</span>
+              <span> Send Reset Link</span>
             )}
           </Button>
         </DialogFooter>

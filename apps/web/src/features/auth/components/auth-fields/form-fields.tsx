@@ -7,6 +7,7 @@ import { Field, FieldGroup } from "@repo/ui/components/ui/field";
 import { z } from "zod";
 import AuthButton from "@/features/auth/components/auth-button";
 import FormField from "@/features/auth/components/auth-fields/form-field";
+import ForgetPassword from "@/features/auth/components/auth-methods/forget-password/forget-password-field";
 import useAuthSign from "@/features/auth/hooks/useAuthSign";
 import { loginSchema, registerSchema } from "@/lib/schemas";
 
@@ -47,7 +48,7 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <FieldGroup className="gap-3">
+        <FieldGroup className="gap-2">
           {isRegister && (
             <FormField
               name="name"
@@ -84,27 +85,27 @@ export default function FormFields({ isRegister = false }: FormFieldsProps) {
               <AuthButton disabled={isPending}>Sign in</AuthButton>
             )}
           </Field>
-
-          <footer className="flex justify-between items-center flex-col mq-w-925:flex-row">
-            {isRegister ? (
-              <p>
-                <span className="text-muted-foreground">
-                  Already have an account?
-                </span>{" "}
-                <Link href="/login">Sign in</Link>
-              </p>
-            ) : (
-              <p>
-                <span className="text-muted-foreground">
-                  Don&apos;t have an account?
-                </span>{" "}
-                <Link href="/register">Sign up</Link>
-              </p>
-            )}
-            <p>Forgot password?</p>
-          </footer>
         </FieldGroup>
       </form>
+
+      <footer className="flex justify-between items-center flex-col mq-w-925:flex-row">
+        {isRegister ? (
+          <p>
+            <span className="text-muted-foreground">
+              Already have an account?
+            </span>{" "}
+            <Link href="/login">Sign in</Link>
+          </p>
+        ) : (
+          <p>
+            <span className="text-muted-foreground">
+              Don&apos;t have an account?
+            </span>{" "}
+            <Link href="/register">Sign up</Link>
+          </p>
+        )}
+        {!isRegister && <ForgetPassword />}
+      </footer>
     </FormProvider>
   );
 }

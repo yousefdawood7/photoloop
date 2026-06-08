@@ -11,6 +11,8 @@ import {
   CardTitle,
 } from "@repo/ui/components/card";
 import { Field } from "@repo/ui/components/field";
+import { LucideMailQuestionMark } from "@repo/ui/components/icons";
+import Placeholder from "@repo/ui/components/placeholder";
 import { toast } from "@repo/ui/lib/sonner";
 import AuthButton from "@/features/auth/components/auth-button";
 import OtpField from "@/features/auth/components/auth-fields/otp-field";
@@ -60,15 +62,11 @@ export default function VerifyFields() {
 
   if (!signedInUserEmail) {
     return (
-      <Card className="max-w-[550px] w-full">
-        <CardHeader>
-          <CardTitle className="text-2xl text-center">No email found</CardTitle>
-          <CardDescription className="text-center">
-            We couldn&apos;t find an email address to send the verification code
-            to. Please go back and enter your email address.
-          </CardDescription>
-        </CardHeader>
-      </Card>
+      <Placeholder
+        title="No email found"
+        description="We couldn't find an email address to send the verification code to. Please go back and enter your email address"
+        icon={LucideMailQuestionMark}
+      />
     );
   }
 

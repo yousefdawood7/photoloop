@@ -1,4 +1,9 @@
-export type AuthMethodsType = "github" | "google" | "facebook" | "magic-link";
+export type AuthMethodsType =
+  | "github"
+  | "google"
+  | "facebook"
+  | "magic-link"
+  | "forget-password";
 
 export type AuthButtonType = {
   methodName: AuthMethodsType;
