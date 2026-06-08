@@ -1,8 +1,9 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@repo/ui/components/button";
 import { DialogFooter } from "@repo/ui/components/dialog";
+import { Spinner } from "@repo/ui/components/spinner";
 import { z } from "better-auth";
-import AuthButton from "@/features/auth/components/auth-button";
 import useAuthProvider from "@/features/auth/hooks/useAuthProvider";
 import { forgetPasswordEmailSchema } from "@/lib/schemas";
 
@@ -35,9 +36,17 @@ export default function ForgetPasswordEmailForm({
         {children}
         <DialogFooter className="sm:justify-start">
           {/* !isError is Just to ensure that forget password link send successfully we shouldn't send it again */}
-          <AuthButton disabled={isPending || isError === false}>
-            Send Reset Link
-          </AuthButton>
+
+          <Button type="submit" disabled={isPending || isError === false}>
+            {isPending ? (
+              <>
+                <Spinner />
+                <span>Sending Reset Link</span>
+              </>
+            ) : (
+              <span> Send Reset Link</span>
+            )}
+          </Button>
         </DialogFooter>
       </form>
     </FormProvider>

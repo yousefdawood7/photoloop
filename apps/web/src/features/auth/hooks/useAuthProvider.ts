@@ -59,7 +59,7 @@ export default function useAuthProvider({
               setSignIn?.(true);
               setIsError(false);
               toast.success(
-                `A verification email has been sent to your ${email} address. Please check your inbox.`,
+                `A verification email has been sent to your email.`,
               );
             },
 
