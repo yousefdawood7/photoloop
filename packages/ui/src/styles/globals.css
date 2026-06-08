@@ -137,7 +137,7 @@
 
 iframe {
   /* For Fixing Google's one tap styles issues on dark mode */
-  color-scheme: light;
+  color-scheme: auto;
 }
 
 /* To Fix Google's Unwanted Horizontal Scrollbar */
