@@ -1,3 +1,4 @@
+import { Button } from "@repo/ui/components/button";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +14,9 @@ export default function ForgetPassword() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <p className="cursor-pointer">Forget password</p>
+        <Button className="font-normal" variant={"ghost"}>
+          Forget password
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <ForgetPasswordEmailForm className="space-y-2">
