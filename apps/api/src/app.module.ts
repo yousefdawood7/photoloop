@@ -2,8 +2,9 @@ import { dymoEmailPlugin } from '@dymo-api/better-auth';
 import { Module } from '@nestjs/common';
 import { render } from '@react-email/render';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
-import { betterAuth } from 'better-auth';
+import { APIError, betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { createAuthMiddleware } from 'better-auth/api';
 import {
   emailOTP,
   lastLoginMethod,
@@ -154,6 +155,24 @@ import { ConfigService } from './config/config.service';
               });
               },
             */
+          },
+
+          hooks: {
+            before: createAuthMiddleware(async (ctx) => {
+              // Intercept the password reset request
+              if (ctx.path !== '/request-password-reset') return;
+
+              const user = await ctx.context.internalAdapter.findUserByEmail(
+                ctx.body.email,
+              );
+
+              if (!user) {
+                throw new APIError('BAD_REQUEST', {
+                  message: 'User not found',
+                  code: 'USER_NOT_EXIST',
+                });
+              }
+            }),
           },
         }),
       }),

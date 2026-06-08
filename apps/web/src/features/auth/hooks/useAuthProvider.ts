@@ -68,8 +68,8 @@ export default function useAuthProvider({
 
               const isErrorIssued = customAuthError({
                 error,
-                errorCode: INVALID_CODES.EMAIL_IS_INVALID_OR_BLOCKED,
-                toastMsg: "Please use a valid email address to continue",
+                errorCode: INVALID_CODES.USER_NOT_EXIST,
+                toastMsg: "No account found with that email address",
               });
 
               // prettier-ignore
