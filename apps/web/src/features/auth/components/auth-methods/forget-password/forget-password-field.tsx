@@ -14,7 +14,9 @@ export default function ForgetPassword() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="font-normal">Forgot your password?</Button>
+        <Button className="font-normal" variant={"outline"}>
+          Forgot your password?
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <ForgetPasswordEmailForm className="space-y-2">
