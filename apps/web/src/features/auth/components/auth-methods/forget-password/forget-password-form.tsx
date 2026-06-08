@@ -1,5 +1,6 @@
 "use client";
 
+import { ViewTransition } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,36 +44,49 @@ export default function ForgetPasswordForm() {
     );
 
   return (
-    <aside className="my-auto flex flex-col gap-5 relative w-full max-w-[600px]">
-      <h2 className="text-3xl">Reset your password</h2>
-      <p className="text-muted-foreground">
-        Set a new password to get back to capturing and sharing moments with
-        Photoloop.
-      </p>
-      <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup className="gap-2" aria-disabled={isPending}>
-            <FormField
-              name="password"
-              label="Password"
-              type="password"
-              placeholder="Enter your password"
-              disabled={isPending}
-            />
-            <FormField
-              name="confirmPassword"
-              label="Confirm Password"
-              type="password"
-              placeholder="Confirm your password"
-              disabled={isPending}
-            />
+    <ViewTransition
+      name="auth-form"
+      default="none"
+      enter="auth-enter"
+      exit="auth-exit"
+    >
+      <aside className="my-auto flex flex-col gap-5 relative w-full max-w-[600px]">
+        <ViewTransition name="auth-title">
+          <h2 className="text-3xl">Reset your password</h2>
+        </ViewTransition>
+        <ViewTransition name="auth-subtitle">
+          <p className="text-muted-foreground">
+            Set a new password to get back to capturing and sharing moments with
+            Photoloop.
+          </p>
+        </ViewTransition>
+        <FormProvider {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <FieldGroup className="gap-2" aria-disabled={isPending}>
+              <FormField
+                name="password"
+                label="Password"
+                type="password"
+                placeholder="Enter your password"
+                disabled={isPending}
+              />
+              <FormField
+                name="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                placeholder="Confirm your password"
+                disabled={isPending}
+              />
 
-            <Field>
-              <AuthButton disabled={isPending}>Reset your password</AuthButton>
-            </Field>
-          </FieldGroup>
-        </form>
-      </FormProvider>
-    </aside>
+              <Field>
+                <AuthButton disabled={isPending}>
+                  Reset your password
+                </AuthButton>
+              </Field>
+            </FieldGroup>
+          </form>
+        </FormProvider>
+      </aside>
+    </ViewTransition>
   );
 }
