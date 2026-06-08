@@ -127,7 +127,7 @@ import { ConfigService } from './config/config.service';
               void resendService.send({
                 from: 'Photoloop <hello@yousefdawood.me>',
                 to: user.email,
-                subject: 'Your magic link for Photoloop',
+                subject: 'Reset Your Photoloop Password',
 
                 html: await render(
                   ResetPassswordEmail({
